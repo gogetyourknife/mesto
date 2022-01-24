@@ -16,17 +16,77 @@
       <section class="profile">
         <img src="./images/profile/avatar.jpg" alt="Аватар" class="profile__avatar">
         <div class="profile__info">
-          <p class="profile__name">Жак-Ив Кусто</p>
-          <button class="profile__edit-button"></button>
+          <div class="profile__wrapper">
+            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <button class="profile__edit-button" id="profile__edit-button"></button>
+          </div>
           <p class="profile__description">Исследователь океана</p>
         </div>
         <button class="profile__add-button"></button>
       </section>
-      <section class="elements"></section>
+      <section class="elements">
+        <ul class="element">
+          <li class="element__card">
+            <img src="./images/elements/Element1.jpg" alt="Карточка с локацией" class="element__image">
+            <div class="element__wrapper">
+              <h2 class="element__title">Карачаевск</h2>
+              <button class="element__like-button"></button>
+            </div>
+          </li>
+          <li class="element__card">
+            <img src="./images/elements/Element2.jpg" alt="Карточка с локацией" class="element__image">
+            <div class="element__wrapper">
+              <h2 class="element__title">Гора Эльбрус</h2>
+              <button class="element__like-button"></button>
+            </div>
+          </li>
+          <li class="element__card">
+            <img src="./images/elements/Element3.jpg" alt="Карточка с локацией" class="element__image">
+            <div class="element__wrapper">
+              <h2 class="element__title">Домбай</h2>
+              <button class="element__like-button"></button>
+            </div>
+          </li>
+          <li class="element__card">
+            <img src="./images/elements/Element2.jpg" alt="Карточка с локацией" class="element__image">
+            <div class="element__wrapper">
+              <h2 class="element__title">Гора Эльбрус</h2>
+              <button class="element__like-button"></button>
+            </div>
+          </li>
+          <li class="element__card">
+            <img src="./images/elements/Element3.jpg" alt="Карточка с локацией" class="element__image">
+            <div class="element__wrapper">
+              <h2 class="element__title">Домбай</h2>
+              <button class="element__like-button"></button>
+            </div>
+          </li>
+          <li class="element__card">
+            <img src="./images/elements/Element1.jpg" alt="Карточка с локацией" class="element__image">
+            <div class="element__wrapper">
+              <h2 class="element__title">Карачаево-Ч...</h2>
+              <button class="element__like-button"></button>
+            </div>
+          </li>
+        </ul>
+      </section>
     </main>
     <footer class="footer">
       <p class="footer__logo">&copy; 2020 Mesto Russia</p>
     </footer>
   </div>
+  <div class="popup popup__profile-edit" id="popup">
+    <div class="popup__wrapper">
+      <form novalidate class="popup__form">
+        <h2 class="popup__title">Редактировать профиль</h2>
+        <input type="text" class="popup__input popup__input_name">
+        <input type="text" class="popup__input popup__input_description">
+        <button type="submit" class="popup__save-button">Сохранить</button>
+      </form>
+      <button class="popup__close-button"></button>
+    </div>
+  </div>
 </body>
+<script src="./js/popup.js"></script>
+<script src="./js/editForm.js"></script>
 </html>
