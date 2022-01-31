@@ -37,7 +37,7 @@
             <img src="./images/elements/Element2.jpg" alt="Фото" class="element__image">
             <div class="element__wrapper">
               <h2 class="element__title">Гора Эльбрус</h2>
-              <button aria-label="Поставить лайк" class="element__like-button" type="button""></button>
+              <button aria-label="Поставить лайк" class="element__like-button" type="button"></button>
             </div>
           </li>
           <li class="element__card">
@@ -77,10 +77,10 @@
   </div>
   <div class="popup" id="popup">
     <div class="popup__wrapper">
-      <form novalidate class="popup__form" type="text">
+      <form novalidate class="popup__form" name="profile">
         <h2 class="popup__title">Редактировать профиль</h2>
-        <input type="text" class="popup__input popup__input_type_name">
-        <input type="text" class="popup__input popup__input_type_description">
+        <input type="text" class="popup__input popup__input_type_name" name="name">
+        <input type="text" class="popup__input popup__input_type_description" name="description">
         <button aria-label="Сохранить" type="submit" class="popup__save-button">Сохранить</button>
       </form>
       <button aria-label="Закрыть" class="popup__close-button" type="button"></button>
