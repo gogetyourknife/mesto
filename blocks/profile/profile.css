@@ -16,7 +16,6 @@
 @media (max-width: 425px) {
   .profile {
     padding-top: 0;
-    max-height: 286px;
     margin-bottom: 36px;
   }
 }

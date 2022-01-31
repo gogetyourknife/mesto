@@ -20,5 +20,6 @@
 @media (max-width: 425px) {
   .wrapper {
     width: 100%;
+    max-width: 320px;
   }
 }

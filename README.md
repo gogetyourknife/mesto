@@ -1,3 +1,15 @@
 # Проект: Место
+#### Профиль с возможностью редактирования, добавления новых мест для путешествий
 
-### Опубликовано здесь: https://gogetyourknife.github.io/test-for-ya/
+## Стэк
+* HTML (HTML5)
+* CSS
+* JS
+
+## Технологии
+* Flexbox
+* Grid
+* Адаптивная вёртска
+* БЭМ
+
+## Опубликовано здесь: https://gogetyourknife.github.io/test-for-ya/
