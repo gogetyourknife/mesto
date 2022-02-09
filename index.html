@@ -26,48 +26,6 @@
       </section>
       <section class="elements">
         <ul class="element">
-          <li class="element__card">
-            <img src="./images/elements/Element1.jpg" alt="Фото" class="element__image">
-            <div class="element__wrapper">
-              <h2 class="element__title">Карачаевск</h2>
-              <button aria-label="Поставить лайк" class="element__like-button" type="button"></button>
-            </div>
-          </li>
-          <li class="element__card">
-            <img src="./images/elements/Element2.jpg" alt="Фото" class="element__image">
-            <div class="element__wrapper">
-              <h2 class="element__title">Гора Эльбрус</h2>
-              <button aria-label="Поставить лайк" class="element__like-button" type="button"></button>
-            </div>
-          </li>
-          <li class="element__card">
-            <img src="./images/elements/Element3.jpg" alt="Фото" class="element__image">
-            <div class="element__wrapper">
-              <h2 class="element__title">Домбай</h2>
-              <button aria-label="Поставить лайк" class="element__like-button" type="button"></button>
-            </div>
-          </li>
-          <li class="element__card">
-            <img src="./images/elements/Element2.jpg" alt="Фото" class="element__image">
-            <div class="element__wrapper">
-              <h2 class="element__title">Гора Эльбрус</h2>
-              <button aria-label="Поставить лайк" class="element__like-button" type="button"></button>
-            </div>
-          </li>
-          <li class="element__card">
-            <img src="./images/elements/Element3.jpg" alt="Фото" class="element__image">
-            <div class="element__wrapper">
-              <h2 class="element__title">Домбай</h2>
-              <button aria-label="Поставить лайк" class="element__like-button" type="button"></button>
-            </div>
-          </li>
-          <li class="element__card">
-            <img src="./images/elements/Element1.jpg" alt="Фото" class="element__image">
-            <div class="element__wrapper">
-              <h2 class="element__title">Карачаево-Ч...</h2>
-              <button aria-label="Поставить лайк" class="element__like-button" type="button"></button>
-            </div>
-          </li>
         </ul>
       </section>
     </main>
@@ -75,17 +33,45 @@
       <p class="footer__logo">&copy; 2020 Mesto Russia</p>
     </footer>
   </div>
-  <div class="popup" id="popup">
+  <div class="popup popup_type_edit" id="popup">
     <div class="popup__wrapper">
       <form novalidate class="popup__form" name="profile">
         <h2 class="popup__title">Редактировать профиль</h2>
         <input type="text" class="popup__input popup__input_type_name" name="name">
         <input type="text" class="popup__input popup__input_type_description" name="description">
         <button aria-label="Сохранить" type="submit" class="popup__save-button">Сохранить</button>
+        <button aria-label="Закрыть" class="popup__close-button" type="button"></button>
       </form>
-      <button aria-label="Закрыть" class="popup__close-button" type="button"></button>
     </div>
   </div>
+  <div class="popup popup_type_addcard">
+    <div class="popup__wrapper">
+      <form novalidate class="popup__form popup__form_card" name="profile">
+        <h2 class="popup__title popup__title_card">Новое место</h2>
+        <input type="text" class="popup__input popup__input_type_place" name="place" placeholder="Название места">
+        <input type="text" class="popup__input popup__input_type_link" name="link" placeholder="Ссылка на картинку">
+        <button aria-label="Создать" type="submit" class="popup__save-button popup__save-button_card">Создать</button>
+        <button aria-label="Закрыть" class="popup__close-button" type="button"></button>
+      </form>
+    </div>
+  </div>
+  <div class="popup popup_type_zoom">
+      <figure class="popup__figure">
+        <button aria-label="Закрыть" class="popup__close-button popup__close-button_zoom" type="button"></button>
+        <img src="" alt="Фотография" class="popup__image">
+        <figcaption class="popup__description"></figcaption>
+      </figure>
+  </div>
+  <template id="template">
+    <li class="element__card">
+      <button type="button" class="element__delete-button"></button>
+      <img src="https://img3.akspic.ru/previews/8/7/7/6/6/166778/166778-spongebob-360x640.jpg" alt="Карточка" class="element__image">
+      <div class="element__wrapper">
+        <h2 class="element__title"></h2>
+        <button aria-label="Поставить лайк" class="element__like-button" type="button"></button>
+      </div>
+    </li>
+  </template>
   <script src="./js/popup.js"></script>
 </body>
 </html>
