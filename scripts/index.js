@@ -24,20 +24,18 @@ const newCardDelete = document.querySelector('.element__delete-button');
 // попапы
 
 const popup = document.querySelectorAll('.popup');
+const singlePopup = document.querySelector('.popup');
 const popupEdit = document.querySelector('.popup_type_edit');
 const popupAddCard = document.querySelector('.popup_type_addcard');
 const formCard = document.querySelector('.popup__form_card');
 const openImagePopup = document.querySelector('.popup_type_zoom');
+const inputsCard =  Array.from(popupAddCard.querySelectorAll('.popup__input'));
+const inputsEdit = Array.from(popupEdit.querySelectorAll('.popup__input'));
 
 // переменные для ПР5
 
 const template = document.querySelector('#template').content;
 const cardsContainer = document.querySelector('.element');
-
-// пр6
-
-const mainScreen = document.querySelector('.root');
-
 
 // переменные для создания карточки
 const initialCards = [
@@ -74,8 +72,7 @@ function openPopup(item) {
   document.addEventListener('keydown', keyHandlerEscape);
 };
 
-function openPropfilePopup (evt) {
-  evt.preventDefault();
+function openPropfilePopup () {
   nameInput.value = newName.innerHTML;
   descrInput.value = newDescr.innerHTML;
   openPopup(popupEdit);
@@ -125,6 +122,14 @@ function createCard(place, link) {
   newCard.querySelector('.element__image').src = link;
   newCard.querySelector('.element__title').textContent = place;
 
+  newCard.querySelector('.element__delete-button').addEventListener('click', function (event) {
+    event.target.closest('.element__card').remove();
+  })
+
+  newCard.querySelector('.element__like-button').addEventListener('click', function (evt) {
+    evt.target.classList.toggle('element__like-button_active');
+  });
+
   newCard.querySelector('.element__image').addEventListener('click', function (evt) {
     evt.preventDefault;
     openPopupImage(place, link)
@@ -154,9 +159,18 @@ popupSavedCard.addEventListener('click', function (evt) {
 
 // Обработчики
 
-popupEditButton.addEventListener('click', openPropfilePopup);
+popupEditButton.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  openPropfilePopup();
+  resetValidation(inputsEdit, popupSaved, popupEdit, validationConfiguration);
+  popupEdit.reset();
+});
 
-popupAdd.addEventListener('click', () => {openPopup(popupAddCard)});
+popupAdd.addEventListener('click', () => {
+  openPopup(popupAddCard);
+  resetValidation(inputsCard, popupSavedCard, formCard, validationConfiguration);
+  formCard.reset();
+});
 
 popupClosed.forEach((closed) => {
   closed.addEventListener('click', function() {
@@ -167,30 +181,6 @@ popupClosed.forEach((closed) => {
 });
 
 formElement.addEventListener('submit', saveNewName);
-
-// делегирование слушателей
-
-cardsContainer.addEventListener('click', function (evt) {
-  if (evt.target.classList.contains('element__delete-button')) {
-     evt.target.closest('.element__card').remove();
- }
-});
-
-cardsContainer.addEventListener('click', function (evt) {
-  if (evt.target.classList.contains('element__like-button')) {
-    evt.target.classList.toggle('element__like-button_active');
- }
-});
-
-// добавление при нажатии на энтер
-
-[nameInput, descrInput, place, link].forEach(item => {
-  item.addEventListener('keydown', function (evt) {
-    if (evt.key === 'Enter') {
-      saveNewName();
-    }
-  });
-});
 
 // закрытие при нажатии мышкой
 
