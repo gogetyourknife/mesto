@@ -58,7 +58,6 @@ function setSubmitButtonState(inputList, buttonElement, validationConfiguration)
 const setEventListeners = (formElement, validationConfiguration) => {
   const inputList = Array.from(formElement.querySelectorAll(validationConfiguration.inputSelector));
   const buttonElement = formElement.querySelector(validationConfiguration.submitButtonSelector);
-  setSubmitButtonState(inputList, buttonElement, validationConfiguration);
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', function () {
       checkInputValidity(formElement, inputElement, validationConfiguration);
