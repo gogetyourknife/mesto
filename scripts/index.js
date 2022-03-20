@@ -1,3 +1,6 @@
+import { validationConfiguration, FormValidation} from './validate.js';
+import { Card, settings} from './card.js';
+
 // инпуты для форм
 
 const nameInput = document.querySelector('.popup__input_type-name');
@@ -24,7 +27,6 @@ const newCardDelete = document.querySelector('.element__delete-button');
 // попапы
 
 const popup = document.querySelectorAll('.popup');
-const singlePopup = document.querySelector('.popup');
 const popupEdit = document.querySelector('.popup_type_edit');
 const popupAddCard = document.querySelector('.popup_type_addcard');
 const formCard = document.querySelector('.popup__form_card');
@@ -36,6 +38,11 @@ const inputsEdit = Array.from(popupEdit.querySelectorAll('.popup__input'));
 
 const template = document.querySelector('#template').content;
 const cardsContainer = document.querySelector('.element');
+
+// переменные для ПР7
+
+const formValidationCard = new FormValidation(validationConfiguration, popupAddCard);
+const formValidationInfo = new FormValidation(validationConfiguration, popupEdit);
 
 // переменные для создания карточки
 const initialCards = [
@@ -162,13 +169,13 @@ popupSavedCard.addEventListener('click', function (evt) {
 popupEditButton.addEventListener('click', (evt) => {
   evt.preventDefault();
   openPropfilePopup();
-  resetValidation(inputsEdit, popupSaved, popupEdit, validationConfiguration);
+  formValidationInfo.resetValidation();
   popupEdit.reset();
 });
 
 popupAdd.addEventListener('click', () => {
   openPopup(popupAddCard);
-  resetValidation(inputsCard, popupSavedCard, formCard, validationConfiguration);
+  formValidationCard.resetValidation();
   formCard.reset();
 });
 
