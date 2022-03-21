@@ -1,15 +1,3 @@
-import { zoomFunction } from './index.js';
-
-export const settings = {
-  template: '.template',
-  element: '.element__card',
-  delete: '.element__delete-button',
-  image: '.element__image',
-  title: '.element__title',
-  like: '.element__like-button',
-  zoom: zoomFunction,
-};
-
 export class Card {
   constructor(place, link, settings) {
     this._place = place;

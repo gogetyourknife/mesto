@@ -54,7 +54,6 @@ function openPropfilePopup () {
 
 function openCardPopup() {
   formValidationCard.resetValidation();
-  formCard.reset()
   openPopup(popupAddCard);
 };
 
@@ -106,6 +105,7 @@ function addingCard (evt) {
   cardsContainer.prepend(createCard(place.value, link.value, settings));
   closePopup(popupAddCard);
   formValidationCard.disableSubmitButton();
+  formCard.reset()
 };
 
 popupSavedCard.addEventListener('click', addingCard);
