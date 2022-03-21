@@ -15,7 +15,7 @@ export class FormValidation {
     this._inactiveButtonClass = validationConfiguration.inactiveButtonClass;
     this._inputErrorClass = validationConfiguration.inputErrorClass;
     this._errorClass = validationConfiguration.errorClass;
-    this._inputList = Array.from(this._formElement.querySelectorAll(this._inputElement));
+    this._inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
     this._buttonElement = this._formElement.querySelector(this._submitButtonSelector);
   };
 

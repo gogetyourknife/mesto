@@ -38,6 +38,9 @@ const cardsContainer = document.querySelector('.element');
 const formValidationCard = new FormValidation(validationConfiguration, popupAddCard);
 const formValidationInfo = new FormValidation(validationConfiguration, popupEdit);
 
+formValidationCard.enableValidation();
+formValidationInfo.enableValidation();
+
 // переменные для создания карточки
 const initialCards = [
   {
@@ -76,6 +79,7 @@ function openPopup(item) {
 function openPropfilePopup () {
   nameInput.value = newName.innerHTML;
   descrInput.value = newDescr.innerHTML;
+  formValidationInfo.resetValidation();
   openPopup(popupEdit);
 };
 
@@ -133,12 +137,11 @@ popupSavedCard.addEventListener('click', function (evt) {
 popupEditButton.addEventListener('click', (evt) => {
   evt.preventDefault();
   openPropfilePopup();
-  formValidationInfo.resetValidation();
 });
 
 popupAdd.addEventListener('click', () => {
-  openPopup(popupAddCard);
   formValidationCard.resetValidation();
+  openPopup(popupAddCard);
   formCard.reset();
 });
 
