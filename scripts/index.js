@@ -18,7 +18,6 @@ const popupEditButton = document.querySelector('.profile__edit-button');
 const popupClosed = document.querySelectorAll('.popup__close-button');
 const popupSavedCard = document.querySelector('.popup__save-button_card')
 const popupAdd = document.querySelector('.profile__add-button');
-const imagePopup = document.querySelector('.popup__image');
 const formElement = document.querySelector('.popup__form');
 
 // попапы
