@@ -82,7 +82,7 @@ function openPropfilePopup () {
 };
 
 function openCardPopup() {
-  formValidationCard.resetValidation;
+  formValidationCard.resetValidation();
   formCard.reset()
   openPopup(popupAddCard);
 };
