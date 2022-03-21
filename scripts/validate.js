@@ -10,7 +10,7 @@ export const validationConfiguration = {
 export class FormValidation {
   constructor(validationConfiguration, formElement) {
     this._formElement = formElement;
-    this._inputElement = validationConfiguration.inputElement;
+    this._inputElement = validationConfiguration.inputSelector;
     this._submitButtonSelector = validationConfiguration.submitButtonSelector;
     this._inactiveButtonClass = validationConfiguration.inactiveButtonClass;
     this._inputErrorClass = validationConfiguration.inputErrorClass;
@@ -68,24 +68,24 @@ export class FormValidation {
   // функция-обработчик
 
   setEventListeners = () => {
-    this._setSubmitButtonState(this._inputList, this._buttonElement);
+    this._setSubmitButtonState();
     this._inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
         this._checkInputValidity(inputElement);
-        this._setSubmitButtonState(this._inputList, this._buttonElement);
+        this._setSubmitButtonState();
       });
     });
   };
 
-  enableValidation = () => {
-    const formList = Array.from(document.querySelectorAll(this._formSelector));
-    formList.forEach((formElement) => {
-      this._formElement.addEventListener('submit', (evt) => {
-      evt.preventDefault();
-    });
-    this._setEventListeners();
-    });
-  };
+  // enableValidation = () => {
+  //   const formList = Array.from(document.querySelectorAll(this._formSelector));
+  //   formList.forEach((formElement) => {
+  //     this._formElement.addEventListener('submit', (evt) => {
+  //     evt.preventDefault();
+  //   });
+  //   this._setEventListeners();
+  //   });
+  // };
 
   // сброс валидации
 

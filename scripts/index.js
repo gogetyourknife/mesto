@@ -38,9 +38,6 @@ const cardsContainer = document.querySelector('.element');
 const formValidationCard = new FormValidation(validationConfiguration, popupAddCard);
 const formValidationInfo = new FormValidation(validationConfiguration, popupEdit);
 
-formValidationCard.enableValidation();
-formValidationInfo.enableValidation();
-
 // переменные для создания карточки
 const initialCards = [
   {
@@ -80,8 +77,16 @@ function openPropfilePopup () {
   nameInput.value = newName.innerHTML;
   descrInput.value = newDescr.innerHTML;
   formValidationInfo.resetValidation();
+  formCard.reset()
   openPopup(popupEdit);
 };
+
+function openCardPopup() {
+  formValidationCard.resetValidation;
+  formCard.reset()
+  openPopup(popupAddCard);
+};
+
 
 function closePopup(item) {
   item.classList.remove('popup_opened');
@@ -129,7 +134,6 @@ popupSavedCard.addEventListener('click', function (evt) {
   evt.preventDefault();
   cardsContainer.prepend(createCard(place.value, link.value, settings));
   closePopup(popupAddCard);
-  formCard.reset();
 });
 
 // Обработчики
@@ -139,10 +143,9 @@ popupEditButton.addEventListener('click', (evt) => {
   openPropfilePopup();
 });
 
-popupAdd.addEventListener('click', () => {
-  formValidationCard.resetValidation();
-  openPopup(popupAddCard);
-  formCard.reset();
+popupAdd.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  openCardPopup();
 });
 
 popupClosed.forEach((closed) => {
@@ -168,3 +171,6 @@ export function zoomFunction (place, link) {
   popupImageLink.alt = place;
   openPopup(openImagePopup);
 };
+
+formValidationCard.setEventListeners();
+formValidationInfo.setEventListeners();
