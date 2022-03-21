@@ -41,14 +41,14 @@ export class FormValidation {
 
   _checkInputValidity = (inputElement) => {
     if (!inputElement.validity.valid) {
-      showInputError(formElement, inputElement, inputElement.validationMessage, validationConfiguration);
+      this._showInputError(inputElement, inputElement.validationMessage, validationConfiguration);
     } else {
-      hideInputError(formElement, inputElement, validationConfiguration);
+      this._hideInputError(inputElement, validationConfiguration);
     }
   };
 
-  _hasInvalidInput = (inputList) => {
-    return inputList.some((inputElement) => {
+  _hasInvalidInput = () => {
+    return this._inputList.some((inputElement) => {
       return !inputElement.validity.valid;
     })
   };
@@ -56,7 +56,7 @@ export class FormValidation {
   // перекрашиваем кнопку
 
   _setSubmitButtonState = () => {
-    if (this._hasInvalidInput(this._inputList)) {
+    if (this._hasInvalidInput()) {
       this._buttonElement.classList.add(this._inactiveButtonClass);
       this._buttonElement.disabled = true;
     } else {
@@ -67,7 +67,7 @@ export class FormValidation {
 
   // функция-обработчик
 
-  _setEventListeners = () => {
+  setEventListeners = () => {
     this._setSubmitButtonState(this._inputList, this._buttonElement);
     this._inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
@@ -75,16 +75,6 @@ export class FormValidation {
         this._setSubmitButtonState(this._inputList, this._buttonElement);
       });
     });
-  };
-
-  // передаем обработчик в основную функцию
-
-  enableValidation = () => {
-    const formList = Array.from(document.querySelectorAll(this._formSelector));
-      this._formElement.addEventListener('submit', (evt) => {
-        evt.preventDefault();
-      });
-      this._setEventListeners();
   };
 
   // сброс валидации

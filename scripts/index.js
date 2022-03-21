@@ -1,5 +1,5 @@
-import { validationConfiguration, FormValidation} from './validate.js';
-import { Card, settings} from './card.js';
+import { validationConfiguration, FormValidation } from './validate.js';
+import { Card, settings } from './card.js';
 
 // инпуты для форм
 
@@ -83,13 +83,14 @@ function openPropfilePopup () {
   nameInput.value = newName.innerHTML;
   descrInput.value = newDescr.innerHTML;
   openPopup(popupEdit);
+  formValidationInfo.resetValidation();
 };
 
-function openPopupImage (place, link) {
-  popupImageLink.src = link;
-  popupImageDescription.textContent = place;
-  openPopup(openImagePopup);
-};
+// function openPopupImage (place, link) {
+//   popupImageLink.src = link;
+//   popupImageDescription.textContent = place;
+//   openPopup(openImagePopup);
+// };
 
 function closePopup(item) {
   item.classList.remove('popup_opened');
@@ -123,43 +124,50 @@ function mouseHandler (evt) {
 
 // Создание новой карточки
 
-function createCard(place, link) {
-  const newCard = template.cloneNode(true);
+// function createCard(place, link) {
+//   const newCard = template.cloneNode(true);
 
-  newCard.querySelector('.element__image').src = link;
-  newCard.querySelector('.element__title').textContent = place;
+//   newCard.querySelector('.element__image').src = link;
+//   newCard.querySelector('.element__title').textContent = place;
 
-  newCard.querySelector('.element__delete-button').addEventListener('click', function (event) {
-    event.target.closest('.element__card').remove();
-  })
+//   newCard.querySelector('.element__delete-button').addEventListener('click', function (event) {
+//     event.target.closest('.element__card').remove();
+//   })
 
-  newCard.querySelector('.element__like-button').addEventListener('click', function (evt) {
-    evt.target.classList.toggle('element__like-button_active');
-  });
+//   newCard.querySelector('.element__like-button').addEventListener('click', function (evt) {
+//     evt.target.classList.toggle('element__like-button_active');
+//   });
 
-  newCard.querySelector('.element__image').addEventListener('click', function (evt) {
-    evt.preventDefault;
-    openPopupImage(place, link)
-  });
+//   newCard.querySelector('.element__image').addEventListener('click', function (evt) {
+//     evt.preventDefault;
+//     openPopupImage(place, link)
+//   });
 
-  return newCard;
-};
+//   return newCard;
+// };
+
+// function createCard(place, link, settings) {
+//   const newCard = new Card(place, link, settings);
+//   const card = newCard.addNewCard();
+//   return card;
+// };
+
+// initialCards.forEach((item) => {
+//   cardsContainer.prepend(createCard(item.place, item.link, settings));
+// });
+
+initialCards.forEach((item) => {
+  const card = new Card(item.place, item.link, settings);
+  const cardElement = card.addNewCard();
+  cardsContainer.prepend(cardElement);
+  return cardElement;
+});
 
 // Добвление новой карточки
 
-function addCard(newCard) {
-  cardsContainer.prepend(newCard);
-};
-
-initialCards.forEach((item) => {
-  const cardItem = createCard(item.place, item.link);
-  addCard(cardItem);
-});
-
 popupSavedCard.addEventListener('click', function (evt) {
   evt.preventDefault();
-  const card = createCard(place.value, link.value);
-  addCard(card);
+  cardsContainer.prepend(createCard(place.value, link.value, settings));
   closePopup(popupAddCard);
   formCard.reset();
 });
@@ -194,3 +202,14 @@ formElement.addEventListener('submit', saveNewName);
 popupEdit.addEventListener('click', mouseHandler);
 popupAddCard.addEventListener('click', mouseHandler);
 openImagePopup.addEventListener('click', mouseHandler);
+
+
+export function zoomFunction (place, link) {
+  popupImageDescription.textContent = place;
+  popupImageLink.src = link;
+  popupImageLink.alt = place;
+  openPopup(openImagePopup);
+};
+
+formValidationCard.setEventListeners();
+formValidationInfo.setEventListeners();
