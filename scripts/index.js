@@ -7,7 +7,6 @@ const nameInput = document.querySelector('.popup__input_type-name');
 const descrInput = document.querySelector('.popup__input_type-description');
 const newName = document.querySelector('.profile__name');
 const newDescr = document.querySelector('.profile__description');
-const descrImagePopup = document.querySelector('.popup__description');
 const place = document.querySelector('.popup__input_type_place');
 const link = document.querySelector('.popup__input_type_link');
 const popupImageLink = document.querySelector('.popup__image');
@@ -17,12 +16,10 @@ const popupImageDescription = document.querySelector('.popup__description');
 
 const popupEditButton = document.querySelector('.profile__edit-button');
 const popupClosed = document.querySelectorAll('.popup__close-button');
-const popupSaved = document.querySelector('.popup__save-button')
 const popupSavedCard = document.querySelector('.popup__save-button_card')
 const popupAdd = document.querySelector('.profile__add-button');
 const imagePopup = document.querySelector('.popup__image');
 const formElement = document.querySelector('.popup__form');
-const newCardDelete = document.querySelector('.element__delete-button');
 
 // попапы
 
@@ -31,12 +28,9 @@ const popupEdit = document.querySelector('.popup_type_edit');
 const popupAddCard = document.querySelector('.popup_type_addcard');
 const formCard = document.querySelector('.popup__form_card');
 const openImagePopup = document.querySelector('.popup_type_zoom');
-const inputsCard =  Array.from(popupAddCard.querySelectorAll('.popup__input'));
-const inputsEdit = Array.from(popupEdit.querySelectorAll('.popup__input'));
 
 // переменные для ПР5
 
-const template = document.querySelector('#template').content;
 const cardsContainer = document.querySelector('.element');
 
 // переменные для ПР7
@@ -83,14 +77,7 @@ function openPropfilePopup () {
   nameInput.value = newName.innerHTML;
   descrInput.value = newDescr.innerHTML;
   openPopup(popupEdit);
-  formValidationInfo.resetValidation();
 };
-
-// function openPopupImage (place, link) {
-//   popupImageLink.src = link;
-//   popupImageDescription.textContent = place;
-//   openPopup(openImagePopup);
-// };
 
 function closePopup(item) {
   item.classList.remove('popup_opened');
@@ -122,48 +109,17 @@ function mouseHandler (evt) {
   }
 };
 
-// Создание новой карточки
+// Добвление новой карточки
 
-// function createCard(place, link) {
-//   const newCard = template.cloneNode(true);
-
-//   newCard.querySelector('.element__image').src = link;
-//   newCard.querySelector('.element__title').textContent = place;
-
-//   newCard.querySelector('.element__delete-button').addEventListener('click', function (event) {
-//     event.target.closest('.element__card').remove();
-//   })
-
-//   newCard.querySelector('.element__like-button').addEventListener('click', function (evt) {
-//     evt.target.classList.toggle('element__like-button_active');
-//   });
-
-//   newCard.querySelector('.element__image').addEventListener('click', function (evt) {
-//     evt.preventDefault;
-//     openPopupImage(place, link)
-//   });
-
-//   return newCard;
-// };
-
-// function createCard(place, link, settings) {
-//   const newCard = new Card(place, link, settings);
-//   const card = newCard.addNewCard();
-//   return card;
-// };
-
-// initialCards.forEach((item) => {
-//   cardsContainer.prepend(createCard(item.place, item.link, settings));
-// });
+function createCard(place, link, settings) {
+  const newCard = new Card(place, link, settings);
+  const card = newCard.addNewCard();
+  return card;
+};
 
 initialCards.forEach((item) => {
-  const card = new Card(item.place, item.link, settings);
-  const cardElement = card.addNewCard();
-  cardsContainer.prepend(cardElement);
-  return cardElement;
+  cardsContainer.prepend(createCard(item.place, item.link, settings));
 });
-
-// Добвление новой карточки
 
 popupSavedCard.addEventListener('click', function (evt) {
   evt.preventDefault();
@@ -178,7 +134,6 @@ popupEditButton.addEventListener('click', (evt) => {
   evt.preventDefault();
   openPropfilePopup();
   formValidationInfo.resetValidation();
-  popupEdit.reset();
 });
 
 popupAdd.addEventListener('click', () => {
@@ -210,6 +165,3 @@ export function zoomFunction (place, link) {
   popupImageLink.alt = place;
   openPopup(openImagePopup);
 };
-
-formValidationCard.setEventListeners();
-formValidationInfo.setEventListeners();

@@ -50,7 +50,7 @@ export class Card {
 
     const elementCard = this._cardItem.querySelector(this._element);
     const cardTitle = this._cardItem.querySelector(this._title);
-    const cardImage = this._cardItem.querySelector(this._image);
+    const cardImage = this._cardItem.querySelector(this._cardImage);
 
     const likeButton = this._cardItem.querySelector(this._likeButton);
     const deleteButton = this._cardItem.querySelector(this._deleteCard);
@@ -63,6 +63,6 @@ export class Card {
     deleteButton.addEventListener('click', () => {this._deleteCard(elementCard)});
     cardImage.addEventListener('click', () => {this._zoomImage(this._place, this._link)});
 
-    return this._elementCard;
+    return this._cardItem;
   };
 };

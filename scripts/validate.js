@@ -22,7 +22,7 @@ export class FormValidation {
   // показываем ошибку валидации
 
   _showInputError = (inputElement, errorMessage) => {
-    const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+    const errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
     inputElement.classList.add(this._inputErrorClass);
     errorElement.classList.add(this._errorClass);
     errorElement.textContent = errorMessage;
@@ -31,9 +31,9 @@ export class FormValidation {
   // убираем ошибку валидации
 
   _hideInputError = (inputElement) => {
-    const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-    inputElement.classList.remove(validationConfiguration.inputErrorClass);
-    errorElement.classList.remove(validationConfiguration.errorClass);
+    const errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
+    inputElement.classList.remove(this._inputErrorClass);
+    errorElement.classList.remove(this._errorClass);
     errorElement.textContent = '';
   };
 
@@ -41,9 +41,9 @@ export class FormValidation {
 
   _checkInputValidity = (inputElement) => {
     if (!inputElement.validity.valid) {
-      this._showInputError(inputElement, inputElement.validationMessage, validationConfiguration);
+      this._showInputError(inputElement, inputElement.validationMessage);
     } else {
-      this._hideInputError(inputElement, validationConfiguration);
+      this._hideInputError(inputElement);
     }
   };
 
@@ -74,6 +74,16 @@ export class FormValidation {
         this._checkInputValidity(inputElement);
         this._setSubmitButtonState(this._inputList, this._buttonElement);
       });
+    });
+  };
+
+  enableValidation = () => {
+    const formList = Array.from(document.querySelectorAll(this._formSelector));
+    formList.forEach((formElement) => {
+      this._formElement.addEventListener('submit', (evt) => {
+      evt.preventDefault();
+    });
+    this._setEventListeners();
     });
   };
 
