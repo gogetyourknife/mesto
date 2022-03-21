@@ -7,7 +7,7 @@ export const validationConfiguration = {
   errorClass: 'popup__input-error_active',
 }
 
-export class FormValidation {
+export class FormValidator {
   constructor(validationConfiguration, formElement) {
     this._formElement = formElement;
     this._inputElement = validationConfiguration.inputSelector;
@@ -57,13 +57,21 @@ export class FormValidation {
 
   _setSubmitButtonState = () => {
     if (this._hasInvalidInput()) {
-      this._buttonElement.classList.add(this._inactiveButtonClass);
-      this._buttonElement.disabled = true;
+      this.disableSubmitButton();
     } else {
-      this._buttonElement.classList.remove(this._inactiveButtonClass);
-      this._buttonElement.disabled = false;
+      this.enableSubmitButton();
     }
   };
+
+  disableSubmitButton = () => {
+    this._buttonElement.classList.add(this._inactiveButtonClass)
+    this._buttonElement.disbaled = true;
+  }
+
+  enableSubmitButton = () => {
+    this._buttonElement.classList.remove(this._inactiveButtonClass)
+    this._buttonElement.disbaled = false;
+  }
 
   // функция-обработчик
 

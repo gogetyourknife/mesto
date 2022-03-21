@@ -10,7 +10,7 @@
   color: #FFFFFF;
   margin: 0;
   margin-right: 18px;
-
+  max-width: 294px;
 }
 
 @media (max-width: 425px) {

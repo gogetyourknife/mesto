@@ -41,6 +41,7 @@ export class Card {
 
   _deleteCard (deleteCard) {
     deleteCard.remove();
+    this._cardItem = null;
   };
 
   // новая карточка

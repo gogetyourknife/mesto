@@ -1,5 +1,6 @@
-import { validationConfiguration, FormValidation } from './validate.js';
-import { Card, settings } from './card.js';
+import { FormValidator } from './FormValidator.js';
+import { Card } from './card.js';
+import { settings, validationConfiguration, initialCards } from './utils.js';
 
 // инпуты для форм
 
@@ -34,49 +35,20 @@ const cardsContainer = document.querySelector('.element');
 
 // переменные для ПР7
 
-const formValidationCard = new FormValidation(validationConfiguration, popupAddCard);
-const formValidationInfo = new FormValidation(validationConfiguration, popupEdit);
-
-// переменные для создания карточки
-const initialCards = [
-  {
-    place: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    place: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    place: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    place: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    place: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    place: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
+const formValidationCard = new FormValidator(validationConfiguration, popupAddCard);
+const formValidationInfo = new FormValidator(validationConfiguration, popupEdit);
 
 // Открытие и закрытие модальных окон
 
 function openPopup(item) {
   item.classList.add('popup_opened');
-  document.addEventListener('keydown', keyHandlerEscape);
+  document.addEventListener('keydown', closeByEscape);
 };
 
 function openPropfilePopup () {
-  nameInput.value = newName.innerHTML;
-  descrInput.value = newDescr.innerHTML;
+  nameInput.value = newName.textContent;
+  descrInput.value = newDescr.textContent;
   formValidationInfo.resetValidation();
-  formCard.reset()
   openPopup(popupEdit);
 };
 
@@ -89,7 +61,7 @@ function openCardPopup() {
 
 function closePopup(item) {
   item.classList.remove('popup_opened');
-  document.removeEventListener('keydown', keyHandlerEscape);
+  document.removeEventListener('keydown', closeByEscape);
 }
 
 // Сохранение изменений в профиле
@@ -103,7 +75,7 @@ function saveNewName (evt) {
 
 // ловим эскейп
 
-function keyHandlerEscape (evt) {
+function closeByEscape (evt) {
   if (evt.key === 'Escape') {
     closePopup(document.querySelector('.popup_opened'));
   }
@@ -111,7 +83,7 @@ function keyHandlerEscape (evt) {
 
 // ловим клик мышки
 
-function mouseHandler (evt) {
+function handleMouseClick (evt) {
   if (evt.target === evt.currentTarget) {
     closePopup(evt.target);
   }
@@ -119,7 +91,7 @@ function mouseHandler (evt) {
 
 // Добвление новой карточки
 
-function createCard(place, link, settings) {
+function createCard(place, link) {
   const newCard = new Card(place, link, settings);
   const card = newCard.addNewCard();
   return card;
@@ -129,11 +101,14 @@ initialCards.forEach((item) => {
   cardsContainer.prepend(createCard(item.place, item.link, settings));
 });
 
-popupSavedCard.addEventListener('click', function (evt) {
+function addingCard (evt) {
   evt.preventDefault();
   cardsContainer.prepend(createCard(place.value, link.value, settings));
   closePopup(popupAddCard);
-});
+  formValidationCard.disableSubmitButton();
+};
+
+popupSavedCard.addEventListener('click', addingCard);
 
 // Обработчики
 
@@ -159,9 +134,9 @@ formElement.addEventListener('submit', saveNewName);
 
 // закрытие при нажатии мышкой
 
-popupEdit.addEventListener('click', mouseHandler);
-popupAddCard.addEventListener('click', mouseHandler);
-openImagePopup.addEventListener('click', mouseHandler);
+popupEdit.addEventListener('click', handleMouseClick);
+popupAddCard.addEventListener('click', handleMouseClick);
+openImagePopup.addEventListener('click', handleMouseClick);
 
 
 export function zoomFunction (place, link) {
