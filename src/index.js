@@ -27,6 +27,7 @@ const popupSavedCard = document.querySelector('.popup__save-button_card')
 const popupAdd = document.querySelector('.profile__add-button');
 const formElement = document.querySelector('.popup__form');
 
+
 // попапы
 
 const popup = document.querySelectorAll('.popup');
@@ -34,6 +35,11 @@ const popupEdit = document.querySelector('.popup_type_edit');
 const popupAddCard = document.querySelector('.popup_type_addcard');
 const formCard = document.querySelector('.popup__form_card');
 const openImagePopup = document.querySelector('.popup_type_zoom');
+
+
+
+// переменные, а те, что выше, надо вообще перебрать на предмет актуальности
+
 
 // переменные для ПР7
 
@@ -66,7 +72,7 @@ const section = new Section({
 
 // popup edit profile
 
-const popupWithFormEditProfile = new PopupWithForm('.popup_type_edit', {
+const popupWithFormEditProfile = new PopupWithForm(popupEdit, {
   submitFormHandler: (inputValues) => {
   userInfo.setUserInfo(inputValues.name, inputValues.info);
   }
@@ -114,8 +120,8 @@ function zoomImage(place, link) {
 
 // Добвление новой карточки
 
-const createCard = (data) => {
-  const newCard = new Card(data, cardSelector, zoomImage);
+function createCard(data) {
+  const newCard = new Card(data, '#template', zoomImage);
   const card = newCard.addNewCard();
   return card;
 };

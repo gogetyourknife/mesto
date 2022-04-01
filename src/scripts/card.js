@@ -14,18 +14,6 @@ export class Card {
     return clone;
   };
 
-  // новая карточка
-
-  addNewCard() {
-    this._cardItem = this._getTemplate();
-    const cardImage = this._cardItem.querySelector(this._cardImage);
-    cardTitle.textContent = this._place;
-    cardImage.src = this._link;
-    cardImage.alt = this._place;
-    this._setEventListeners();
-    return this._cardItem;
-  };
-
     // ставим лайк
 
     _clickLike (like) {
@@ -40,7 +28,7 @@ export class Card {
     };
 
 
-  _setEventListeners() {
+  _setEventListenersForCard() {
     this._cardItem.querySelector('.element__like-button')
     .addEventListener('click', this._clickLike);
 
@@ -51,4 +39,24 @@ export class Card {
       this._zoomImage(this._place, this._link);
     });
   };
+
+    // новая карточка
+
+    addNewCard() {
+      this._cardItem = this._getTemplate();
+
+      const cardImage = document.querySelector('.element__image');
+
+      cardImage.src = this._link;
+      cardImage.alt = this._place;
+
+      const cardTitle = document.querySelector('.element__title');
+
+      cardTitle.textContent = this._place;
+
+      this._setEventListenersForCard();
+
+      return this._cardItem;
+    };
+
 }

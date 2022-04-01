@@ -9,7 +9,7 @@ export class PopupWithForm extends Popup {
   };
 
   _getInputValues() {
-    const inputList = Array.from(this._formElement.querySelectorAll('._popup__input'));
+    const inputList = Array.from(this._form.querySelectorAll('._popup__input'));
     const inputValues = {};
     inputList.forEach(input => {
       inputValues[input.name] = input.value;
@@ -30,7 +30,7 @@ export class PopupWithForm extends Popup {
 
   close() {
     this._form.reset();
-    this._form.removeEventListeners('submit', this._submitEventHandler);
+    this._form.removeEventListener('submit', this._submitEventHandler);
     super.close();
   };
 }
