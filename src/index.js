@@ -1,5 +1,20 @@
 import './pages/index.css';
 
+import {
+  nameInput,
+  descrInput,
+  place,
+  link,
+  popupImageLink,
+  popupEditButton,
+  popupAdd,
+  popup,
+  popupEdit,
+  popupAddCard,
+  formCard,
+  openImagePopup
+} from './scripts/constants.js'
+
 import { Section } from './scripts/Section.js';
 import { PopupWithImage } from './scripts/PopupWithImage.js';
 import { PopupWithForm } from './scripts/PopupWithForm.js';
@@ -7,39 +22,6 @@ import { UserInfo } from './scripts/UserInfo.js';
 import { FormValidator } from './scripts/FormValidator.js';
 import { Card } from './scripts/card.js';
 import { validationConfiguration, initialCards } from './scripts/utils.js';
-
-// инпуты для форм
-
-const nameInput = document.querySelector('.popup__input_type-name');
-const descrInput = document.querySelector('.popup__input_type-description');
-const newName = document.querySelector('.profile__name');
-const newDescr = document.querySelector('.profile__description');
-const place = document.querySelector('.popup__input_type_place');
-const link = document.querySelector('.popup__input_type_link');
-const popupImageLink = document.querySelector('.popup__image');
-const popupImageDescription = document.querySelector('.popup__description');
-
-// кнопки
-
-const popupEditButton = document.querySelector('.profile__edit-button');
-const popupClosed = document.querySelectorAll('.popup__close-button');
-const popupSavedCard = document.querySelector('.popup__save-button_card')
-const popupAdd = document.querySelector('.profile__add-button');
-const formElement = document.querySelector('.popup__form');
-
-
-// попапы
-
-const popup = document.querySelectorAll('.popup');
-const popupEdit = document.querySelector('.popup_type_edit');
-const popupAddCard = document.querySelector('.popup_type_addcard');
-const formCard = document.querySelector('.popup__form_card');
-const openImagePopup = document.querySelector('.popup_type_zoom');
-
-
-
-// переменные, а те, что выше, надо вообще перебрать на предмет актуальности
-
 
 // переменные для ПР7
 
@@ -53,36 +35,19 @@ formValidationInfo.setEventListeners();
 const userNameSelector = '.profile__name';
 const userDescrSelector = '.profile__description';
 
-// константы для ПР 8
-
-
-// ПР 8
-
-const userInfo = new UserInfo({userNameSelector, userDescrSelector});
-
-// new section
-
-const section = new Section({
-  items: initialCards,
-  renderer: (item) => {
-    const newCard = createCard(item);
-    section.addItems(newCard);
-  }
-});
-
 // popup edit profile
 
 const popupWithFormEditProfile = new PopupWithForm(popupEdit, {
   submitFormHandler: (inputValues) => {
-  userInfo.setUserInfo(inputValues.name, inputValues.info);
+  userInfo.setUserInfo(inputValues.name, inputValues.description);
   }
 });
 
 popupEditButton.addEventListener('click', () => {
-  const {name, info} = userInfo.getUserInfo();
+  const {name, description} = userInfo.getUserInfo();
   popupWithFormEditProfile.open();
   nameInput.value = name;
-  descrInput.value = info;
+  descrInput.value = description;
   formValidationInfo.resetValidation();
 });
 
@@ -96,7 +61,7 @@ const popWithFormAddCard = new PopupWithForm(popupAddCard, {
       place: inputValues.place,
       link: inputValues.link
     });
-    section.addItems(item);
+    cardsList.addItems(item);
   }
 });
 
@@ -115,8 +80,9 @@ const popupWithImage = new PopupWithImage(popupImageLink);
 
 function zoomImage(place, link) {
   popupWithImage.open(place, link);
-  popupWithImage.setEventListeners();
 };
+
+popupWithImage.setEventListeners();
 
 // Добвление новой карточки
 
@@ -126,4 +92,16 @@ function createCard(data) {
   return card;
 };
 
-section.renderCards();
+const userInfo = new UserInfo({userNameSelector, userDescrSelector});
+
+// new section: cardslist
+
+const cardsList = new Section({
+  data: initialCards,
+  renderer: (card) => {
+    const newCard = createCard(card);
+    cardsList.addItems(newCard);
+  }
+});
+
+cardsList.renderCards();

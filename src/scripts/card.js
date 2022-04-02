@@ -10,7 +10,7 @@ export class Card {
 
   _getTemplate() {
     const clone = document.querySelector(this._cardSelector).
-    content.querySelector('.element__card').cloneNode(true);
+    content.cloneNode(true);
     return clone;
   };
 
@@ -22,8 +22,8 @@ export class Card {
 
     // удаляем
 
-    _deleteCard (deleteCard) {
-      deleteCard.remove();
+    _deleteCard = () => {
+      this._cardItem.remove();
       this._cardItem = null;
     };
 
@@ -33,7 +33,7 @@ export class Card {
     .addEventListener('click', this._clickLike);
 
     this._cardItem.querySelector('.element__delete-button')
-    .addEventListener('click', this. _deleteCard);
+    .addEventListener('click', this._deleteCard);
 
     this._cardItem.querySelector('.popup__image').addEventListener('click', () => {
       this._zoomImage(this._place, this._link);
@@ -45,12 +45,12 @@ export class Card {
     addNewCard() {
       this._cardItem = this._getTemplate();
 
-      const cardImage = document.querySelector('.element__image');
+      const cardImage = this._cardItem.querySelector('.element__image');
 
       cardImage.src = this._link;
       cardImage.alt = this._place;
 
-      const cardTitle = document.querySelector('.element__title');
+      const cardTitle = this._cardItem.querySelector('.element__title');
 
       cardTitle.textContent = this._place;
 
