@@ -1,12 +1,11 @@
 export class Section {
-  constructor({ renderer, data }, cardsContainer) {
+  constructor({ renderer }, cardsContainer) {
     this._renderer = renderer;
-    this._itemsList = data;
-    this._container = document.querySelector(cardsContainer);
+    this._container = cardsContainer;
   };
 
-  renderCards() {
-    this._itemsList.forEach(item => {
+  renderCards(data) {
+    data.forEach(item => {
       this._renderer(item);
     })
   };

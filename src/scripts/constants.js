@@ -15,6 +15,8 @@ export const popupEditButton = document.querySelector('.profile__edit-button');
 export const popupClosed = document.querySelectorAll('.popup__close-button');
 export const popupSavedCard = document.querySelector('.popup__save-button_card')
 export const popupAdd = document.querySelector('.profile__add-button');
+export const cardsContainer = document.querySelector('.element');
+export const deleteButton = document.querySelector('.element__delete-button');
 // export const formElement = document.querySelector('.popup__form');
 
 

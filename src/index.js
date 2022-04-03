@@ -3,16 +3,12 @@ import './pages/index.css';
 import {
   nameInput,
   descrInput,
-  place,
-  link,
-  popupImageLink,
   popupEditButton,
   popupAdd,
-  popup,
   popupEdit,
   popupAddCard,
-  formCard,
-  openImagePopup
+  openImagePopup,
+  cardsContainer,
 } from './scripts/constants.js'
 
 import { Section } from './scripts/Section.js';
@@ -21,7 +17,7 @@ import { PopupWithForm } from './scripts/PopupWithForm.js';
 import { UserInfo } from './scripts/UserInfo.js';
 import { FormValidator } from './scripts/FormValidator.js';
 import { Card } from './scripts/card.js';
-import { validationConfiguration, initialCards } from './scripts/utils.js';
+import { validationConfiguration, initialCards, settings } from './scripts/utils.js';
 
 // переменные для ПР7
 
@@ -74,7 +70,7 @@ popWithFormAddCard.setEventListeners();
 
 // popup with image
 
-const popupWithImage = new PopupWithImage(popupImageLink);
+const popupWithImage = new PopupWithImage(openImagePopup);
 
 // zoom image
 
@@ -87,7 +83,7 @@ popupWithImage.setEventListeners();
 // Добвление новой карточки
 
 function createCard(data) {
-  const newCard = new Card(data, '#template', zoomImage);
+  const newCard = new Card(data, settings, zoomImage);
   const card = newCard.addNewCard();
   return card;
 };
@@ -96,12 +92,12 @@ const userInfo = new UserInfo({userNameSelector, userDescrSelector});
 
 // new section: cardslist
 
-const cardsList = new Section({
-  data: initialCards,
-  renderer: (card) => {
-    const newCard = createCard(card);
-    cardsList.addItems(newCard);
-  }
-});
+const cardsList = new Section(
+  {
+    renderer: (card) => {
+      const newCard = createCard(card);
+      cardsList.addItems(newCard);
+    },
+  } , cardsContainer );
 
-cardsList.renderCards();
+cardsList.renderCards(initialCards);

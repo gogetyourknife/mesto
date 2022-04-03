@@ -1,7 +1,7 @@
 export const settings = {
   template: '.template',
   element: '.element__card',
-  delete: '.element__delete-button',
+  trash: '.element__delete-button',
   image: '.element__image',
   title: '.element__title',
   like: '.element__like-button',
