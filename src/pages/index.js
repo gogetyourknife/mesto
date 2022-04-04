@@ -1,4 +1,4 @@
-import './pages/index.css';
+import './index.css';
 
 import {
   nameInput,
@@ -9,15 +9,18 @@ import {
   popupAddCard,
   openImagePopup,
   cardsContainer,
-} from './scripts/constants.js'
+  userName,
+  userDescr
+} from '../uitls/constants.js'
 
-import { Section } from './scripts/Section.js';
-import { PopupWithImage } from './scripts/PopupWithImage.js';
-import { PopupWithForm } from './scripts/PopupWithForm.js';
-import { UserInfo } from './scripts/UserInfo.js';
-import { FormValidator } from './scripts/FormValidator.js';
-import { Card } from './scripts/card.js';
-import { validationConfiguration, initialCards, settings } from './scripts/utils.js';
+import { Section } from '../components/Section.js';
+import { PopupWithImage } from '../components/PopupWithImage.js';
+import { PopupWithForm } from '../components/PopupWithForm.js';
+import { UserInfo } from '../components/UserInfo.js';
+import { FormValidator } from '../components/FormValidator.js';
+import { Card } from '../components/Card.js';
+import { validationConfiguration, settings } from '../uitls/constants.js';
+import { initialCards } from '../uitls/initials.js';
 
 // переменные для ПР7
 
@@ -25,11 +28,6 @@ const formValidationCard = new FormValidator(validationConfiguration, popupAddCa
 const formValidationInfo = new FormValidator(validationConfiguration, popupEdit);
 formValidationCard.setEventListeners();
 formValidationInfo.setEventListeners();
-
-// селекторы
-
-const userNameSelector = '.profile__name';
-const userDescrSelector = '.profile__description';
 
 // popup edit profile
 
@@ -88,7 +86,7 @@ function createCard(data) {
   return card;
 };
 
-const userInfo = new UserInfo({userNameSelector, userDescrSelector});
+const userInfo = new UserInfo({userName, userDescr});
 
 // new section: cardslist
 

@@ -1,21 +1,3 @@
-export const settings = {
-  template: '.template',
-  element: '.element__card',
-  trash: '.element__delete-button',
-  image: '.element__image',
-  title: '.element__title',
-  like: '.element__like-button',
-};
-
-export const validationConfiguration = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__save-button',
-  inactiveButtonClass: 'popup__save-button_disabled',
-  inputErrorClass: 'popup__input-border_active',
-  errorClass: 'popup__input-error_active',
-}
-
 // переменные для создания карточки
 export const initialCards = [
   {

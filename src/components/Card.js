@@ -14,8 +14,10 @@ export class Card {
   // template
 
   _getTemplate() {
-    const clone = document.querySelector(this._template).
-    content.cloneNode(true);
+    const clone = document
+    .querySelector('#template')
+    .content.querySelector('.element__card')
+    .cloneNode(true);
     return clone;
   };
 
@@ -27,31 +29,29 @@ export class Card {
 
     // удаляем
 
-  _deleteCard () {
-    const cardItem = document.querySelector('.element__card');
-    cardItem.remove();
+  _deleteCard = () => {
+    this._cardItem.remove();
     this._cardItem = null;
     };
+
+  _setEventListenrs() {
+    this._likeButton.addEventListener('click', () => {this._clickLike(this._likeButton)});
+    this._deleteButton.addEventListener('click', () => {this._deleteCard(this._cardItem)});
+    this._cardImage.addEventListener('click', () => {this._zoomImage(this._place, this._link)});
+  }
 
     // новая карточка
 
   addNewCard() {
     this._cardItem = this._getTemplate();
-
-    // this._elementCard = this._cardItem.querySelector(this._element);
     this._cardTitle = this._cardItem.querySelector(this._title);
     this._cardImage = this._cardItem.querySelector(this._cardImage);
     this._likeButton = this._cardItem.querySelector(this._likeButton);
     this._deleteButton = this._cardItem.querySelector(this._deleteButton);
-
     this._cardTitle.textContent = this._place;
     this._cardImage.src = this._link;
     this._cardImage.alt = this._place;
-
-    this._likeButton.addEventListener('click', () => {this._clickLike(this._likeButton)});
-    this._deleteButton.addEventListener('click', () => {this._deleteCard(this._cardItem)});
-    this._cardImage.addEventListener('click', () => {this._zoomImage(this._place, this._link)});
-
+    this._setEventListenrs();
     return this._cardItem;
     };
 }

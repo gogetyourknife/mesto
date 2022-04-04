@@ -88,7 +88,7 @@ export class FormValidator {
   // сброс валидации
 
   resetValidation() {
-    this._setSubmitButtonState(this._inputList, this._buttonElement);
+    this._setSubmitButtonState();
     this._inputList.forEach((inputElement) => {
       this._hideInputError(inputElement);
     });
