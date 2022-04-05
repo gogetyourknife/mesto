@@ -15,7 +15,7 @@ export class Card {
 
   _getTemplate() {
     const clone = document
-    .querySelector('#template')
+    .querySelector(this._template)
     .content.querySelector('.element__card')
     .cloneNode(true);
     return clone;
