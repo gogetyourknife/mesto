@@ -12,4 +12,4 @@
 * Адаптивная вёртска
 * БЭМ
 
-## Опубликовано здесь: https://gogetyourknife.github.io/test-for-ya/
+## Опубликовано здесь: https://gogetyourknife.github.io/mesto/

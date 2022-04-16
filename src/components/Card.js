@@ -1,5 +1,5 @@
 export class Card {
-  constructor(data, settings, zoomImage) {
+  constructor(data, settings, zoomImage, deleteConfirmation, handleLikeClick) {
     this._place = data.place;
     this._link = data.link;
     this._template = settings.template;
@@ -9,6 +9,16 @@ export class Card {
     this._title = settings.title;
     this._likeButton = settings.like;
     this._zoomImage = zoomImage;
+
+    // ПР 9 api
+
+    this._id = data.id;
+    this._userId = data.userId;
+    this._ownerId = data.ownerId;
+    this._likes = data.likes;
+
+    this._deleteConfirmation = deleteConfirmation;
+    this._handleLikeClick = handleLikeClick;
   };
 
   // template
@@ -23,9 +33,40 @@ export class Card {
 
     // ставим лайк
 
-  _clickLike (like) {
-    like.classList.toggle('element__like-button_active');
-  };
+  // _clickLike (like) {
+  //   like.classList.toggle('element__like-button_active');
+  // };
+
+  // условие что карточка лайкнута
+
+  isLiked() {
+    const likedCard = this._likes.find(user => user._id === this._userId);
+    return likedCard;
+  }
+
+  _activeLike = () => {
+    this._document.querySelector('.element__like-button').classList.add('element__like-button_active');
+  }
+
+  // что она не лайкнута
+
+  _disabledLike = () => {
+    this._document.querySelector('.element__like-button').classList.add('element__like-button_active');
+  }
+
+  // поставляем количество лайков
+
+  countLikes (updatedLikes) {
+    this._likes = updatedLikes;
+    const likeCounter = this._document.querySelector('.element__like-counter');
+    likeCounter.textContent = this._likes.length;
+
+    if (this.isLiked()) {
+      this._activeLike()
+    } else {
+      this._disabledLike()
+    }
+  }
 
     // удаляем
 
@@ -35,8 +76,22 @@ export class Card {
     };
 
   _setEventListenrs() {
-    this._likeButton.addEventListener('click', () => {this._clickLike(this._likeButton)});
-    this._deleteButton.addEventListener('click', () => {this._deleteCard(this._cardItem)});
+    // лайк
+    // this._likeButton.addEventListener('click', () => {this._clickLike(this._likeButton)});
+
+    this._likeButton.addEventListener('click', () => {
+      this._handleLikeClick(this._id)
+    });
+
+    // удаление
+    // this._deleteButton.addEventListener('click', () => {this._deleteCard(this._cardItem)});
+
+    this._likeButton.addEventListener('click', () => {
+      this._deleteConfirmation(this._id)
+    });
+
+    // зум карты
+
     this._cardImage.addEventListener('click', () => {this._zoomImage(this._place, this._link)});
   }
 

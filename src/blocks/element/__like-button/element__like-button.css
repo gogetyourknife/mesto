@@ -9,6 +9,7 @@
   padding: 0;
   cursor: pointer;
   background-repeat: no-repeat;
+  margin-bottom: 3px;
 }
 
 .element__like-button:hover {

@@ -9,6 +9,7 @@ export const popupImageLink = document.querySelector('.popup__image');
 export const popupEditButton = document.querySelector('.profile__edit-button');
 export const popupAdd = document.querySelector('.profile__add-button');
 export const cardsContainer = document.querySelector('.element');
+export const changeAvatar = document.querySelector('.profile__change-avatar');
 
 
 // попапы
@@ -16,9 +17,12 @@ export const cardsContainer = document.querySelector('.element');
 export const popupEdit = document.querySelector('.popup_type_edit');
 export const popupAddCard = document.querySelector('.popup_type_addcard');
 export const openImagePopup = document.querySelector('.popup_type_zoom');
+export const popupAvatar = document.querySelector('.popup__form_avatar');
+export const popupRemoval = document.querySelector('.popup__form_delete');
 
 export const userName = '.profile__name';
 export const userDescr = '.profile__description';
+export const userAvatar = '.profile__avatar';
 
 export const settings = {
   template: '.template',
@@ -37,4 +41,3 @@ export const validationConfiguration = {
   inputErrorClass: 'popup__input-border_active',
   errorClass: 'popup__input-error_active',
 }
-
