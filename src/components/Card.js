@@ -104,6 +104,11 @@ export class Card {
     this._cardTitle.textContent = this._place;
     this._cardImage.src = this._link;
     this._cardImage.alt = this._place;
+
+    if (this._ownerId !== this._userId) {
+      this._cardItem.querySelector('.element__delete-button').style.display = 'none';
+    }
+
     this._setEventListenrs();
     return this._cardItem;
     };
