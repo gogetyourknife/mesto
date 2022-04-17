@@ -96,7 +96,7 @@ console.log(res);
 const popupWithFormEditProfile = new PopupWithForm(popupEdit, {
   submitFormHandler: (inputValues) => {
     // newUserInfo.setUserInfo(inputValues.name, inputValues.description);
-
+    popupWithFormEditProfile.renderLoading(true);
     api.editProfile(inputValues.name, inputValues.about)
       .then(res => {
         userInfo.setUserInfo(res.name, res.about);
@@ -130,12 +130,12 @@ const popWithFormAddCard = new PopupWithForm(popupAddCard, {
       .then(res =>
         {
           const item = createCard({
-            name: data.name,
-            link: data.link,
-            id: data._id,
-            userId: data.userId,
+            name: res.name,
+            link: res.link,
+            id: res._id,
+            userId: res.userId,
             ownerId: res.owner._id,
-            likes: data.likes,
+            likes: res.likes,
           });
           cardsList.addItems(item);
           console.log(res)
@@ -164,25 +164,23 @@ popupWithImage.setEventListeners();
 
 // удаление
 
-// const cardDeleteConfirm = new PopupWithForm(popupRemoval, {
-//  submitFormHandler: (ш) => {
-//  api.deleteConfirmCard(id)
-//   }
-// });
+const popupWithDelete = new PopupWithForm(popupRemoval, {
+  submitFormHandler: (id) => {
+  api.deleteConfirmCard(id)
+}
+});
 
-// deleteButton.addEventListener('click', () => {
-//   cardDeleteConfirm.open();
-//   formValidationCard.resetValidation();
-// });
+  deleteButton.addEventListener('click', () => {
+    popupWithDelete.open();
+  });
 
-// cardConfirmDelete.setEventListeners();
+  popupWithDelete.setEventListeners();
 
 // аватарка
 
 const userUpdatedAvatar = new PopupWithForm(popupAvatar, {
   submitFormHandler: (inputValues) => {
-    // newUserInfo.setUserInfo(inputValues.name, inputValues.description);
-
+    popupWithFormEditProfile.renderLoading(true);
     api.updateAvatar(inputValues.avatar)
       .then(res => {
         userInfo.setUserAvatar(res);
@@ -231,3 +229,27 @@ function createCard(data) {
   const card = newCard.addNewCard();
   return card;
 }
+
+
+/* function createCard(item) {
+  const newCard = new Card( data, settings, zoomImage, {
+
+    deleteConfirmation: () => {
+      popupWithDelete.open();
+        api.deleteConfirmCard(newCard._id);
+        newCard.deleteConfirmCard();
+    },
+
+    handleLikeClick: () => {
+      api.addLikes(item._id)
+        .then((item) => {
+          newCard.countLikes(item.likeCounter);
+          newCard.addLikes();
+        })
+    },
+  });
+  const card = newCard.addNewCard();
+  return card;
+}
+не знаю, попробовала расписать по каждой функции
+ */

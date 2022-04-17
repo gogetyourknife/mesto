@@ -74,14 +74,14 @@ class Api {
 
   // 4. Добавление новой карточки
 
-  addCard(data) {
+  addCard(name, link) {
     // this._renderLoading(true);
     return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({
-        name: data.name,
-        link: data.link
+        name,
+        link
       })
     })
     .then(this._handleResponse)

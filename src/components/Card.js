@@ -31,6 +31,10 @@ export class Card {
     return clone;
   };
 
+
+
+
+
     // ставим лайк
 
   // _clickLike (like) {
@@ -51,7 +55,7 @@ export class Card {
   // что она не лайкнута
 
   _disabledLike = () => {
-    this._document.querySelector('.element__like-button').classList.add('element__like-button_active');
+    this._document.querySelector('.element__like-button').classList.remove('element__like-button_active');
   }
 
   // поставляем количество лайков
@@ -72,12 +76,18 @@ export class Card {
     this._cardItem = null;
     };
 
+
+
+
+
+
+
   _setEventListenrs() {
     // лайк
     // this._likeButton.addEventListener('click', () => {this._clickLike(this._likeButton)});
 
     this._likeButton.addEventListener('click', () => {
-      this._handleLikeClick()
+      this._handleLikeClick(this._cardItem)
     });
 
 
@@ -85,7 +95,7 @@ export class Card {
     // this._deleteButton.addEventListener('click', () => {this._deleteCard(this._cardItem)});
 
     this._deleteButton.addEventListener('click', () => {
-      this._deleteConfirmation()
+      this._deleteConfirmation(this._cardItem)
     });
 
     // зум карты
