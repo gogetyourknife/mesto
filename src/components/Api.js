@@ -60,7 +60,7 @@ class Api {
       headers: this._headers,
       body: JSON.stringify({
         name: data.name,
-        description: data.description
+        about: data.about
       })
     })
     .then(this._handleResponse)

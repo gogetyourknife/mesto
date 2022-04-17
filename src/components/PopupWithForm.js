@@ -17,10 +17,6 @@ export class PopupWithForm extends Popup {
     return inputValues;
   };
 
-  changeAvatarHandler(changeAvatar) {
-    this._submitFormHandler = changeAvatar;
-  }
-
   setEventListeners() {
     super.setEventListeners();
     this._form.addEventListener('submit', (evt) => {

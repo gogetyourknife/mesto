@@ -10,6 +10,7 @@ export const popupEditButton = document.querySelector('.profile__edit-button');
 export const popupAdd = document.querySelector('.profile__add-button');
 export const cardsContainer = document.querySelector('.element');
 export const changeAvatar = document.querySelector('.profile__change-avatar');
+export const deleteButton = document.querySelector('.element__delete-button');
 
 
 // попапы
