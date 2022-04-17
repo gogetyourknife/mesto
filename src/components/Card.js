@@ -1,5 +1,5 @@
 export class Card {
-  constructor(data, settings, zoomImage, {deleteConfirmation, handleLikeClick}) {
+  constructor(data, settings, zoomImage, deleteConfirmation, handleLikeClick) {
     this._template = settings.template;
     this._cardItem = settings.element;
     this._deleteButton = settings.trash;
@@ -13,7 +13,7 @@ export class Card {
     this._id = data.id;
     this._userId = data.userId;
     this._ownerId = data.ownerId;
-    this._place = data.place;
+    this._name = data.name;
     this._link = data.link;
 
     this._deleteConfirmation = deleteConfirmation;
@@ -77,19 +77,20 @@ export class Card {
     // this._likeButton.addEventListener('click', () => {this._clickLike(this._likeButton)});
 
     this._likeButton.addEventListener('click', () => {
-      this._handleLikeClick(this._id)
+      this._handleLikeClick()
     });
+
 
     // удаление
     // this._deleteButton.addEventListener('click', () => {this._deleteCard(this._cardItem)});
 
-    this._likeButton.addEventListener('click', () => {
-      this._deleteConfirmation(this._id)
+    this._deleteButton.addEventListener('click', () => {
+      this._deleteConfirmation()
     });
 
     // зум карты
 
-    this._cardImage.addEventListener('click', () => {this._zoomImage(this._place, this._link)});
+    this._cardImage.addEventListener('click', () => {this._zoomImage(this._name, this._link)});
   }
 
     // новая карточка
@@ -101,9 +102,9 @@ export class Card {
     this._likeButton = this._cardItem.querySelector(this._likeButton);
     this._deleteButton = this._cardItem.querySelector(this._deleteButton);
     this._likes = this._cardItem.querySelector(this._likes);
-    this._cardTitle.textContent = this._place;
+    this._cardTitle.textContent = this._name;
     this._cardImage.src = this._link;
-    this._cardImage.alt = this._place;
+    this._cardImage.alt = this._name;
 
     if (this._ownerId !== this._userId) {
       this._cardItem.querySelector('.element__delete-button').style.display = 'none';

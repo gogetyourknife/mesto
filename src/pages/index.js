@@ -26,7 +26,6 @@ import { UserInfo } from '../components/UserInfo.js';
 import { FormValidator } from '../components/FormValidator.js';
 import { Card } from '../components/Card.js';
 import { validationConfiguration, settings } from '../uitls/constants.js';
-import { initialCards } from '../uitls/initials.js';
 import { api } from '../components/Api.js';
 
 // переменные для ПР7
@@ -59,38 +58,53 @@ const cardsList = new Section(
 // делаем карточки по умолчанию
 
 api.getInitialCards()
-  .then(cardsListInitial => {
-    cardsListInitial.forEach(data =>
-      {
-        const cardItem = createCard({
-          place: data.place,
-          link: data.link,
-          id: data._id,
-          userId: userId,
-          ownerId: data.owner._id,
-          likes: data.likes,
-        });
-        cardsList.addItems(cardItem);
-      })
-  });
+.then(cardsListInitial => {
+     cardsListInitial.forEach(data =>
+       {
+         const cardItem = createCard({
+           name: data.name,
+           link: data.link,
+           id: data._id,
+           userId: userId,
+           ownerId: data.owner._id,
+           likes: data.likes,
+         });
+         cardsList.renderCards(cardsListInitial);
+         console.log(data);
+       })
+   });
+
+
+// api.returnAllInformation() // тут вернем данные о юзере и карточки на странице, объединила потому что суть одна - вернуть данные с сервера
+//   .then(([res, cards]) => {
+//     userInfo.setUserInfo(res.name, res.about, res.avatar);
+//     userId = res._id;
+//     cardsList.renderCards(cards)
+//   });
 
   // берем информацию о профиле
 
 api.getProfileInfo()
-  .then(res => {
-    userInfo.setUserInfo(res.name, res.about, res.avatar);
-    userId = res._id;
-  });
+.then(res => {
+userInfo.setUserInfo(res.name, res.about);
+userId = res._id;
+console.log(res);
+});
 
 // popup edit profile
 
 const popupWithFormEditProfile = new PopupWithForm(popupEdit, {
   submitFormHandler: (inputValues) => {
     // newUserInfo.setUserInfo(inputValues.name, inputValues.description);
+
     api.editProfile(inputValues.name, inputValues.about)
       .then(res => {
-        userInfo.setUserInfo(res.name, res.about, res.avatar);
+        userInfo.setUserInfo(res.name, res.about);
       })
+      .finally(() => {
+        popupWithFormEditProfile.renderLoading(false);
+      }
+      )
     }
 });
 
@@ -151,8 +165,8 @@ popupWithImage.setEventListeners();
 // удаление
 
 // const cardDeleteConfirm = new PopupWithForm(popupRemoval, {
-//   submitFormHandler: () => {
-//   api.deleteConfirmCard(id)
+//  submitFormHandler: (ш) => {
+//  api.deleteConfirmCard(id)
 //   }
 // });
 
@@ -165,26 +179,26 @@ popupWithImage.setEventListeners();
 
 // аватарка
 
+const userUpdatedAvatar = new PopupWithForm(popupAvatar, {
+  submitFormHandler: (inputValues) => {
+    // newUserInfo.setUserInfo(inputValues.name, inputValues.description);
+
+    api.updateAvatar(inputValues.avatar)
+      .then(res => {
+        userInfo.setUserAvatar(res);
+      })
+    }
+});
+
 changeAvatar.addEventListener ('click', () => {
-  // formValidationAvatar.resetValidation();
+  formValidationAvatar.setEventListeners();
   userUpdatedAvatar.open();
 })
 
-const userUpdatedAvatar = new PopupWithForm(popupAvatar, {
-  submitFormHandler: () => {
-    const image = avatarPopup.getInputValues();
-    console.log(image)
-    api.updateAvatar(image)
-      .then((data) => {
-        userInfo.updateAvatar(data);
-      });
-  }
-});
-
 userUpdatedAvatar.setEventListeners();
 
-// Добвление новой карточки
 
+// Добвление новой карточки
 function createCard(data) {
   const newCard = new Card(
     data, settings, zoomImage,
@@ -216,4 +230,4 @@ function createCard(data) {
     });
   const card = newCard.addNewCard();
   return card;
-};
+}

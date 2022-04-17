@@ -41,8 +41,8 @@
         <h2 class="popup__title">Редактировать профиль</h2>
         <input required minlength='2' maxlength='40' type="text" class="popup__input popup__input_type-name" name="name" id="name">
         <span class="popup__input-error name-error"></span>
-        <input required minlength='2' maxlength='400' type="text" class="popup__input popup__input_type-description" name="description" id="description">
-        <span class="popup__input-error description-error"></span>
+        <input required minlength='2' maxlength='400' type="text" class="popup__input popup__input_type-description" name="about" id="about">
+        <span class="popup__input-error about-error"></span>
         <button aria-label="Сохранить" type="submit" class="popup__save-button">Сохранить</button>
         <button aria-label="Закрыть" class="popup__close-button" type="button"></button>
       </form>
@@ -84,7 +84,7 @@
       <form name="update_avatar" class="popup__form popup__form_avatar">
         <h2 class="popup__title">Обновить аватар</h2>
         <input required type="url" class="popup__input popup__input_type_avatar" name="avatar" id="avatar" placeholder="Ссылка на аватар">
-        <span class="popup__input-error popup__input-error_avatar link-error"></span>
+        <span class="popup__input-error popup__input-error_avatar avatar-error"></span>
         <button aria-label="Согласиться" type="submit" class="popup__save-button popup__save-button_avatar">Да</button>
       </form>
     </div>

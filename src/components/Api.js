@@ -43,7 +43,7 @@ class Api {
 
   // 3. Редактирование профиля
 
-  // // экран загрузки
+  // экран загрузки
 
   // _renderLoading(isLoading) {
   //   if(isLoading) {
@@ -53,14 +53,14 @@ class Api {
 
   // радактируем профиль
 
-  editProfile(data) {
+  editProfile(name, about) {
     // this._renderLoading(true); // начинаем грузить данные - показываем загрузку
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
-        name: data.name,
-        about: data.about
+        name,
+        about
       })
     })
     .then(this._handleResponse)
@@ -136,13 +136,13 @@ class Api {
 
   // 9. Обновление аватара пользователя
 
-  updateAvatar(data) {
+  updateAvatar(avatar) {
     // this._renderLoading(true);
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
-        avatar: data.avatar
+        avatar
       })
     })
     .then(this._handleResponse)
@@ -152,6 +152,10 @@ class Api {
     // .finally(() => {
     //   this._renderLoading(false);
     // })
+  };
+
+  returnAllInformation() {
+    return Promise.all([this.getInitialCards(), this.getProfileInfo()])
   }
 } // конец API
 
