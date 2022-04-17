@@ -43,18 +43,18 @@ class Api {
 
   // 3. Редактирование профиля
 
-  // экран загрузки
+  // // экран загрузки
 
-  _renderLoading(isLoading) {
-    if(isLoading) {
-      this._buttonElement.innerText = 'Сохранение...'
-    }
-  }
+  // _renderLoading(isLoading) {
+  //   if(isLoading) {
+  //     this._buttonElement.innerText = 'Сохранение...'
+  //   }
+  // }
 
   // радактируем профиль
 
   editProfile(data) {
-    this._renderLoading(true); // начинаем грузить данные - показываем загрузку
+    // this._renderLoading(true); // начинаем грузить данные - показываем загрузку
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
@@ -67,15 +67,15 @@ class Api {
     .catch((err) => {
       console.log(err); // выведем ошибку в консоль
     })
-    .finally(() => {
-      this._renderLoading(false); //при завершении передачи данных, прекращаем отображать загрузку
-    })
+    // .finally(() => {
+    //   this._renderLoading(false); //при завершении передачи данных, прекращаем отображать загрузку
+    // })
   }
 
   // 4. Добавление новой карточки
 
   addCard(data) {
-    this._renderLoading(true);
+    // this._renderLoading(true);
     return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
       headers: this._headers,
@@ -88,9 +88,9 @@ class Api {
     .catch((err) => {
       console.log(err);
     })
-    .finally(() => {
-      this._renderLoading(false);
-    })
+    // .finally(() => {
+    //   this._renderLoading(false);
+    // })
   }
 
   // 7. Удаление карточки
@@ -137,7 +137,7 @@ class Api {
   // 9. Обновление аватара пользователя
 
   updateAvatar(data) {
-    this._renderLoading(true);
+    // this._renderLoading(true);
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
@@ -149,9 +149,9 @@ class Api {
     .catch((err) => {
       console.log(err);
     })
-    .finally(() => {
-      this._renderLoading(false);
-    })
+    // .finally(() => {
+    //   this._renderLoading(false);
+    // })
   }
 } // конец API
 

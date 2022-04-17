@@ -1,24 +1,24 @@
 export class Card {
-  constructor(data, settings, zoomImage, deleteConfirmation, handleLikeClick) {
-    this._place = data.place;
-    this._link = data.link;
+  constructor(data, settings, zoomImage, {deleteConfirmation, handleLikeClick}) {
     this._template = settings.template;
     this._cardItem = settings.element;
     this._deleteButton = settings.trash;
     this._cardImage = settings.image;
     this._title = settings.title;
     this._likeButton = settings.like;
-    this._zoomImage = zoomImage;
+    this._likes = settings.likeCounter;
 
     // ПР 9 api
 
     this._id = data.id;
     this._userId = data.userId;
     this._ownerId = data.ownerId;
-    this._likes = data.likes;
+    this._place = data.place;
+    this._link = data.link;
 
     this._deleteConfirmation = deleteConfirmation;
     this._handleLikeClick = handleLikeClick;
+    this._zoomImage = zoomImage;
   };
 
   // template
@@ -56,11 +56,8 @@ export class Card {
 
   // поставляем количество лайков
 
-  countLikes (updatedLikes) {
-    this._likes = updatedLikes;
-    const likeCounter = this._document.querySelector('.element__like-counter');
+  countLikes = () => {
     likeCounter.textContent = this._likes.length;
-
     if (this.isLiked()) {
       this._activeLike()
     } else {
@@ -103,6 +100,7 @@ export class Card {
     this._cardImage = this._cardItem.querySelector(this._cardImage);
     this._likeButton = this._cardItem.querySelector(this._likeButton);
     this._deleteButton = this._cardItem.querySelector(this._deleteButton);
+    this._likes = this._cardItem.querySelector(this._likes);
     this._cardTitle.textContent = this._place;
     this._cardImage.src = this._link;
     this._cardImage.alt = this._place;

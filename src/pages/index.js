@@ -150,33 +150,33 @@ popupWithImage.setEventListeners();
 
 // удаление
 
-const cardDeleteConfirm = new PopupWithForm(popupRemoval, {
-  submitFormHandler: () => {
-  api.deleteConfirmCard(id)
-  }
-});
+// const cardDeleteConfirm = new PopupWithForm(popupRemoval, {
+//   submitFormHandler: () => {
+//   api.deleteConfirmCard(id)
+//   }
+// });
 
-deleteButton.addEventListener('click', () => {
-  cardDeleteConfirm.open();
-  formValidationCard.resetValidation();
-});
+// deleteButton.addEventListener('click', () => {
+//   cardDeleteConfirm.open();
+//   formValidationCard.resetValidation();
+// });
 
-cardConfirmDelete.setEventListeners();
+// cardConfirmDelete.setEventListeners();
 
 // аватарка
 
 changeAvatar.addEventListener ('click', () => {
+  // formValidationAvatar.resetValidation();
   userUpdatedAvatar.open();
-  formValidationAvatar.resetValidation();
-  console.log('lf');
 })
 
 const userUpdatedAvatar = new PopupWithForm(popupAvatar, {
-  submitFormHandler: (data) => {
-    api.updateAvatar(data)
-      .then(res => {
-        userInfo.updateAvatar(res);
-        console.log(res)
+  submitFormHandler: () => {
+    const image = avatarPopup.getInputValues();
+    console.log(image)
+    api.updateAvatar(image)
+      .then((data) => {
+        userInfo.updateAvatar(data);
       });
   }
 });
