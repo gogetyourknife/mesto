@@ -14,7 +14,8 @@ import {
   userAvatar,
   popupAvatar,
   popupRemoval,
-  changeAvatar
+  changeAvatar,
+  testing
 } from '../uitls/constants.js'
 
 import { Section } from '../components/Section.js';
@@ -38,7 +39,7 @@ formValidationAvatar.setEventListeners();
 
 // ПР9 api
 
-let userId; // переменная для id пользователя, let потому что может перезаписываться
+let userId = null; // переменная для id пользователя, let потому что может перезаписываться
 
 // делаем карточки по умолчанию
 
@@ -147,17 +148,22 @@ cardConfirmDelete.setEventListeners();
 
 // аватарка
 
-changeAvatar.addEventListener('click', () => {
+changeAvatar.addEventListener ('click', () => {
   userUpdatedAvatar.open();
   formValidationAvatar.resetValidation();
+  console.log('lf');
+})
+
+testing.addEventListener('click', function (event) {
+  console.log('Произошло событие', event.type)
 })
 
 
 const userUpdatedAvatar = new PopupWithForm(popupAvatar, {
-  submitFormHandler: (inputValues) => {
-    api.updateAvatar(inputValues.avatar)
+  submitFormHandler: (data) => {
+    api.updateAvatar(data)
       .then(res => {
-        userInfo.setUserInfo(res.name, res.description, res.avatar);
+        userInfo.updateAvatar(res);
       });
   }
 });

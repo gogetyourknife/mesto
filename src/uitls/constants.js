@@ -17,8 +17,9 @@ export const changeAvatar = document.querySelector('.profile__change-avatar');
 export const popupEdit = document.querySelector('.popup_type_edit');
 export const popupAddCard = document.querySelector('.popup_type_addcard');
 export const openImagePopup = document.querySelector('.popup_type_zoom');
-export const popupAvatar = document.querySelector('.popup__form_avatar');
-export const popupRemoval = document.querySelector('.popup__form_delete');
+export const popupAvatar = document.querySelector('.popup_type_avatar');
+export const popupRemoval = document.querySelector('.popup_type_delete');
+export const testing = document.querySelector('.profile__avatar-wrapper');
 
 export const userName = '.profile__name';
 export const userDescr = '.profile__description';
@@ -31,6 +32,7 @@ export const settings = {
   image: '.element__image',
   title: '.element__title',
   like: '.element__like-button',
+  likeCounter: '.element__like-counter'
 };
 
 export const validationConfiguration = {

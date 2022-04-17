@@ -1,10 +1,17 @@
 class Api {
-  constructor(baseUrl, headers) {
-    this._baseUrl = baseUrl;
-    this._headers = headers;
-    this._form = document.querySelector('.popup__form');
-    this._buttonElement = this._form.querySelector('.popup__save-button');
+  constructor(data) {
+    this._baseUrl = data.baseUrl;
+    this._headers = data.headers;
   }
+
+// Так как проверка, прошел запрос или нет, постоянно повторяется, вынесу в отдельную функцию
+
+  _handleResponse(res) {
+    if (res.ok) {
+      return res.json(); // если запрос ок, возвращаем json
+    }
+      return Promise.reject(`Ошибка: ${res.status}`); // если ошибка, отклоняем promise
+    }
 
 // 1. Загрузка информации о пользователе с сервера. Делаем GET запрос: GET https://nomoreparties.co/v1/cohortId/users/me
 
@@ -12,14 +19,10 @@ class Api {
 
   getProfileInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
+    method: 'GET',
     headers: this._headers
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json(); // если запрос ок, возвращаем json
-      }
-        return Promise.reject(`Ошибка: ${res.status}`); // если ошибка, отклоняем promise
-      })
+    .then(this._handleResponse)
     .catch((err) => {
       console.log(err); // выводим ошибку в консоль, если она есть
     });
@@ -29,14 +32,10 @@ class Api {
 
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
+      method: 'GET',
       headers: this._headers
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json(); // если запрос ок, возвращаем json
-      }
-        return Promise.reject(`Ошибка: ${res.status}`); // если ошибка, отклоняем promise
-      })
+    .then(this._handleResponse)
     .catch((err) => {
       console.log(err); // выводим ошибку в консоль, если она есть
     });
@@ -54,22 +53,17 @@ class Api {
 
   // радактируем профиль
 
-  editProfile(name, description) {
+  editProfile(data) {
     this._renderLoading(true); // начинаем грузить данные - показываем загрузку
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
-        name,
-        description
+        name: data.name,
+        description: data.description
       })
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
+    .then(this._handleResponse)
     .catch((err) => {
       console.log(err); // выведем ошибку в консоль
     })
@@ -80,22 +74,17 @@ class Api {
 
   // 4. Добавление новой карточки
 
-  addCard(name, link) {
+  addCard(data) {
     this._renderLoading(true);
     return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({
-        name,
-        link
+        name: data.name,
+        link: data.link
       })
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
+    .then(this._handleResponse)
     .catch((err) => {
       console.log(err);
     })
@@ -106,17 +95,12 @@ class Api {
 
   // 7. Удаление карточки
 
-  deleteConfirmCard(id) {
-    return fetch(`${this._baseUrl}/cards/${id}`, {
+  deleteConfirmCard(data) {
+    return fetch(`${this._baseUrl}/cards/${data._id}`, {
       method: 'DELETE',
       headers: this._headers
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
+    .then(this._handleResponse)
     .catch((err) => {
       console.log(err);
     });
@@ -126,17 +110,12 @@ class Api {
 
   // добавление лайка
 
-  addLikes(id) {
-    return fetch(`${this._baseUrl}/cards/${id}/likes`, {
+  addLikes(data) {
+    return fetch(`${this._baseUrl}/cards/${data._id}/likes`, {
       method: 'PUT', // не post, потому что идет перезапись того, что уже создано: удаляется старая запись, по тому же url делается новая запись
-      headers: this._headers
+      headers: this._headers,
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
+    .then(this._handleResponse)
     .catch((err) => {
       console.log(err);
     });
@@ -144,17 +123,12 @@ class Api {
 
   // удаление лайка
 
-  deleteLikes(id) {
-    return fetch(`${this._baseUrl}/cards/${id}/likes`, {
+  deleteLikes(data) {
+    return fetch(`${this._baseUrl}/cards/${data._id}/likes`, {
       method: 'DELETE',
-      headers: this._headers
+      headers: this._headers,
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
+    .then(this._handleResponse)
     .catch((err) => {
       console.log(err);
     });
@@ -162,21 +136,16 @@ class Api {
 
   // 9. Обновление аватара пользователя
 
-  updateAvatar(avatar) {
+  updateAvatar(data) {
     this._renderLoading(true);
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
-        avatar
+        avatar: data.avatar
       })
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
+    .then(this._handleResponse)
     .catch((err) => {
       console.log(err);
     })
