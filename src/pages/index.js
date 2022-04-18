@@ -162,20 +162,6 @@ function zoomImage(place, link) {
 
 popupWithImage.setEventListeners();
 
-// удаление
-
-const popupWithDelete = new PopupWithForm(popupRemoval, {
-  submitFormHandler: (id) => {
-  api.deleteConfirmCard(id)
-}
-});
-
-  deleteButton.addEventListener('click', () => {
-    popupWithDelete.open();
-  });
-
-  popupWithDelete.setEventListeners();
-
 // аватарка
 
 const userUpdatedAvatar = new PopupWithForm(popupAvatar, {
@@ -196,12 +182,29 @@ changeAvatar.addEventListener ('click', () => {
 userUpdatedAvatar.setEventListeners();
 
 
+// удаление
+
+const popupWithDelete = new PopupWithForm(popupRemoval, {
+  submitFormHandler: (evt) => {
+    evt.preventDefault();
+    api.deleteConfirmCard()
+}
+});
+
+  deleteButton.addEventListener('click', () => {
+    popupWithDelete.open();
+  });
+
+  popupWithDelete.setEventListeners();
+
+
 // Добвление новой карточки
 function createCard(data) {
   const newCard = new Card(
     data, settings, zoomImage,
     (id) => {
-      cardDeleteConfirm.changeAvatarHandler(() => {
+      popupWithDelete.open();
+      popupWithDelete.submitFormHandler(() => {
         api.deleteConfirmCard(id)
           .then(res => {
             newCard.deleteCard(res);
@@ -214,14 +217,14 @@ function createCard(data) {
       if (newCard.isLiked()) {
         api.deleteLikes(id)
           .then(res => {
-            newCard.setLikes(res.likes)
+            newCard.countLikes(res.likes)
             console.log(res)
           })
       }
         else {
           api.addLikes(id)
             .then(res => {
-              newCard.setLikes(res.likes)
+              newCard.countLikes(res.likes)
               console.log(res)
             })
         }
@@ -229,27 +232,3 @@ function createCard(data) {
   const card = newCard.addNewCard();
   return card;
 }
-
-
-/* function createCard(item) {
-  const newCard = new Card( data, settings, zoomImage, {
-
-    deleteConfirmation: () => {
-      popupWithDelete.open();
-        api.deleteConfirmCard(newCard._id);
-        newCard.deleteConfirmCard();
-    },
-
-    handleLikeClick: () => {
-      api.addLikes(item._id)
-        .then((item) => {
-          newCard.countLikes(item.likeCounter);
-          newCard.addLikes();
-        })
-    },
-  });
-  const card = newCard.addNewCard();
-  return card;
-}
-не знаю, попробовала расписать по каждой функции
- */

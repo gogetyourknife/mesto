@@ -6,7 +6,7 @@ export class Card {
     this._cardImage = settings.image;
     this._title = settings.title;
     this._likeButton = settings.like;
-    this._likes = settings.likeCounter;
+    this._likes = settings.likes;
 
     // ПР 9 api
 
@@ -30,10 +30,6 @@ export class Card {
     .cloneNode(true);
     return clone;
   };
-
-
-
-
 
     // ставим лайк
 
@@ -60,8 +56,9 @@ export class Card {
 
   // поставляем количество лайков
 
-  countLikes = () => {
-    likeCounter.textContent = this._likes.length;
+  countLikes () {
+    const likeAmountCount = this._cardItem.querySelector('.element__like-counter');
+    likeAmountCount.textContent = this._likes.length;
     if (this.isLiked()) {
       this._activeLike()
     } else {
@@ -75,11 +72,6 @@ export class Card {
     this._cardItem.remove();
     this._cardItem = null;
     };
-
-
-
-
-
 
 
   _setEventListenrs() {
@@ -116,7 +108,7 @@ export class Card {
     this._cardImage.src = this._link;
     this._cardImage.alt = this._name;
 
-    if (this._ownerId !== this._userId) {
+    if (this._ownerId === this._userId) {
       this._cardItem.querySelector('.element__delete-button').style.display = 'none';
     }
 
