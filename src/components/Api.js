@@ -24,7 +24,7 @@ class Api {
     })
     .then(this._handleResponse)
     .catch((err) => {
-      console.log(err); // выводим ошибку в консоль, если она есть
+      console.log(err);
     });
   }
 
@@ -37,24 +37,13 @@ class Api {
     })
     .then(this._handleResponse)
     .catch((err) => {
-      console.log(err); // выводим ошибку в консоль, если она есть
+      console.log(err);
     });
   }
 
   // 3. Редактирование профиля
 
-  // экран загрузки
-
-  // _renderLoading(isLoading) {
-  //   if(isLoading) {
-  //     this._buttonElement.innerText = 'Сохранение...'
-  //   }
-  // }
-
-  // радактируем профиль
-
   editProfile(name, about) {
-    // this._renderLoading(true); // начинаем грузить данные - показываем загрузку
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
@@ -65,17 +54,13 @@ class Api {
     })
     .then(this._handleResponse)
     .catch((err) => {
-      console.log(err); // выведем ошибку в консоль
+      console.log(err);
     })
-    // .finally(() => {
-    //   this._renderLoading(false); //при завершении передачи данных, прекращаем отображать загрузку
-    // })
   }
 
   // 4. Добавление новой карточки
 
   addCard(name, link) {
-    // this._renderLoading(true);
     return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
       headers: this._headers,
@@ -88,15 +73,12 @@ class Api {
     .catch((err) => {
       console.log(err);
     })
-    // .finally(() => {
-    //   this._renderLoading(false);
-    // })
   }
 
   // 7. Удаление карточки
 
-  deleteConfirmCard(data) {
-    return fetch(`${this._baseUrl}/cards/${data._id}`, {
+  deleteCard(id) {
+    return fetch(`${this._baseUrl}/cards/${id}`, {
       method: 'DELETE',
       headers: this._headers
     })
@@ -110,8 +92,8 @@ class Api {
 
   // добавление лайка
 
-  addLikes(data) {
-    return fetch(`${this._baseUrl}/cards/${data._id}/likes`, {
+  addLikes(id) {
+    return fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: 'PUT', // не post, потому что идет перезапись того, что уже создано: удаляется старая запись, по тому же url делается новая запись
       headers: this._headers,
     })
@@ -123,8 +105,8 @@ class Api {
 
   // удаление лайка
 
-  deleteLikes(data) {
-    return fetch(`${this._baseUrl}/cards/${data._id}/likes`, {
+  deleteLikes(id) {
+    return fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: 'DELETE',
       headers: this._headers,
     })
@@ -137,7 +119,6 @@ class Api {
   // 9. Обновление аватара пользователя
 
   updateAvatar(avatar) {
-    // this._renderLoading(true);
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
@@ -149,15 +130,9 @@ class Api {
     .catch((err) => {
       console.log(err);
     })
-    // .finally(() => {
-    //   this._renderLoading(false);
-    // })
   };
 
-  returnAllInformation() {
-    return Promise.all([this.getInitialCards(), this.getProfileInfo()])
-  }
-} // конец API
+}
 
 export const api = new Api (
   {

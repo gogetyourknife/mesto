@@ -1,34 +1,74 @@
 import './index.css';
 
 import {
-  nameInput,
-  descrInput,
-  popupEditButton,
-  popupAdd,
+  inputWithName,
+  inputWithDescription,
+  buttonEditProfile,
+  buttonAddInformation,
+  buttonChangeAvatar,
+  buttonDeleteCard,
   popupEdit,
   popupAddCard,
-  openImagePopup,
+  popupZoomImage,
   cardsContainer,
   userName,
   userDescr,
   userAvatar,
   popupAvatar,
   popupRemoval,
-  changeAvatar,
-  testing,
-  deleteButton
 } from '../uitls/constants.js'
 
 import { Section } from '../components/Section.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
+import { PopupWithSubmit } from '../components/PopupWithSubmit.js';
 import { UserInfo } from '../components/UserInfo.js';
 import { FormValidator } from '../components/FormValidator.js';
 import { Card } from '../components/Card.js';
 import { validationConfiguration, settings } from '../uitls/constants.js';
 import { api } from '../components/Api.js';
 
-// переменные для ПР7
+// api
+
+let userId = null;
+
+const userInfo = new UserInfo({userName, userDescr, userAvatar});
+
+const cardsList = new Section(
+  {
+    items: [],
+    renderer: (card) => {
+      cardsList.addItems(createCard(card));
+    },
+  } , cardsContainer );
+
+// делаем карточки по умолчанию
+
+const getUserInfo = api.getProfileInfo();
+const getCards = api.getInitialCards();
+
+Promise.all([getUserInfo, getCards])
+  .then(([res, cardsListInitial]) => {
+    userInfo.setUserAvatar(res.avatar);
+    userInfo.setUserInfo(res.name, res.about);
+    userId = res._id;
+    console.log(res);
+
+    cardsListInitial.forEach(data => {
+      const cardItem = {
+        name: data.name,
+        link: data.link,
+        id: data._id,
+        userId: userId,
+        ownerId: data.owner._id,
+        likes: data.likes,
+      }
+      cardsList.addItems(createCard(cardItem));
+         console.log(cardItem);
+    });
+  })
+
+/* POPUP */
 
 const formValidationCard = new FormValidator(validationConfiguration, popupAddCard);
 const formValidationInfo = new FormValidator(validationConfiguration, popupEdit);
@@ -37,65 +77,10 @@ formValidationCard.setEventListeners();
 formValidationInfo.setEventListeners();
 formValidationAvatar.setEventListeners();
 
-// ПР9 api
-
-let userId = null; // переменная для id пользователя, let потому что может перезаписываться
-
-// инфомация о юзере
-
-const userInfo = new UserInfo({userName, userDescr, userAvatar});
-
-// new section: cardslist
-
-const cardsList = new Section(
-  {
-    renderer: (card) => {
-      const newCard = createCard(card);
-      cardsList.addItems(newCard);
-    },
-  } , cardsContainer );
-
-// делаем карточки по умолчанию
-
-api.getInitialCards()
-.then(cardsListInitial => {
-     cardsListInitial.forEach(data =>
-       {
-         const cardItem = createCard({
-           name: data.name,
-           link: data.link,
-           id: data._id,
-           userId: userId,
-           ownerId: data.owner._id,
-           likes: data.likes,
-         });
-         cardsList.renderCards(cardsListInitial);
-         console.log(data);
-       })
-   });
-
-
-// api.returnAllInformation() // тут вернем данные о юзере и карточки на странице, объединила потому что суть одна - вернуть данные с сервера
-//   .then(([res, cards]) => {
-//     userInfo.setUserInfo(res.name, res.about, res.avatar);
-//     userId = res._id;
-//     cardsList.renderCards(cards)
-//   });
-
-  // берем информацию о профиле
-
-api.getProfileInfo()
-.then(res => {
-userInfo.setUserInfo(res.name, res.about);
-userId = res._id;
-console.log(res);
-});
-
 // popup edit profile
 
 const popupWithFormEditProfile = new PopupWithForm(popupEdit, {
   submitFormHandler: (inputValues) => {
-    // newUserInfo.setUserInfo(inputValues.name, inputValues.description);
     popupWithFormEditProfile.renderLoading(true);
     api.editProfile(inputValues.name, inputValues.about)
       .then(res => {
@@ -108,11 +93,11 @@ const popupWithFormEditProfile = new PopupWithForm(popupEdit, {
     }
 });
 
-popupEditButton.addEventListener('click', () => {
+buttonEditProfile.addEventListener('click', () => {
   const {name, about} = userInfo.getUserInfo();
   popupWithFormEditProfile.open();
-  nameInput.value = name;
-  descrInput.value = about;
+  inputWithName.value = name;
+  inputWithDescription.value = about;
   formValidationInfo.resetValidation();
 });
 
@@ -120,12 +105,9 @@ popupWithFormEditProfile.setEventListeners();
 
 // add card popup
 
-const popWithFormAddCard = new PopupWithForm(popupAddCard, {
+const popupWithFormAddCard = new PopupWithForm(popupAddCard, {
   submitFormHandler: (inputValues) => {
-    // const item = createCard({
-    //   place: inputValues.place,
-    //   link: inputValues.link
-    // });
+    popupWithFormEditProfile.renderLoading(true);
     api.addCard(inputValues.place, inputValues.link)
       .then(res =>
         {
@@ -138,21 +120,25 @@ const popWithFormAddCard = new PopupWithForm(popupAddCard, {
             likes: res.likes,
           });
           cardsList.addItems(item);
+          popupWithFormAddCard.close();
           console.log(res)
+        })
+        .finally(() => {
+          popupWithFormEditProfile.renderLoading(false);
         });
     }
 });
 
-popupAdd.addEventListener('click', () => {
-  popWithFormAddCard.open();
+buttonAddInformation.addEventListener('click', () => {
+  popupWithFormAddCard.open();
   formValidationCard.resetValidation();
 });
 
-popWithFormAddCard.setEventListeners();
+popupWithFormAddCard.setEventListeners();
 
 // popup with image
 
-const popupWithImage = new PopupWithImage(openImagePopup);
+const popupWithImage = new PopupWithImage(popupZoomImage);
 
 // zoom image
 
@@ -166,69 +152,71 @@ popupWithImage.setEventListeners();
 
 const userUpdatedAvatar = new PopupWithForm(popupAvatar, {
   submitFormHandler: (inputValues) => {
-    popupWithFormEditProfile.renderLoading(true);
+
+  userUpdatedAvatar.renderLoading(true)
     api.updateAvatar(inputValues.avatar)
       .then(res => {
-        userInfo.setUserAvatar(res);
+          userInfo.setUserAvatar(res.avatar)
+          userUpdatedAvatar.close()
+      })
+      .finally(() => {
+         userUpdatedAvatar.renderLoading(false)
       })
     }
-});
+  });
 
-changeAvatar.addEventListener ('click', () => {
-  formValidationAvatar.setEventListeners();
+  userUpdatedAvatar.setEventListeners();
+
+  buttonChangeAvatar.addEventListener ('click', () => {
   userUpdatedAvatar.open();
+  formValidationAvatar.setEventListeners();
 })
-
-userUpdatedAvatar.setEventListeners();
-
 
 // удаление
 
-const popupWithDelete = new PopupWithForm(popupRemoval, {
-  submitFormHandler: (evt) => {
-    evt.preventDefault();
-    api.deleteConfirmCard()
-}
-});
+const popupWithDelete = new PopupWithSubmit(popupRemoval);
+popupWithDelete.setEventListeners();
 
-  deleteButton.addEventListener('click', () => {
+  buttonDeleteCard.addEventListener('click', () => {
     popupWithDelete.open();
   });
 
-  popupWithDelete.setEventListeners();
-
 
 // Добвление новой карточки
+
 function createCard(data) {
   const newCard = new Card(
     data, settings, zoomImage,
+
     (id) => {
       popupWithDelete.open();
-      popupWithDelete.submitFormHandler(() => {
-        api.deleteConfirmCard(id)
+      popupWithDelete.deleteSubmitHandler(() => {
+        api.deleteCard(id)
           .then(res => {
             newCard.deleteCard(res);
-            cardDeleteConfirm.close();
+            popupWithDelete.close();
             console.log(res)
           });
       });
     },
+
     (id) => {
       if (newCard.isLiked()) {
         api.deleteLikes(id)
           .then(res => {
-            newCard.countLikes(res.likes)
+            newCard.setLikes(res.likes)
             console.log(res)
           })
       }
         else {
           api.addLikes(id)
             .then(res => {
-              newCard.countLikes(res.likes)
-              console.log(res)
+              newCard.setLikes(res.likes)
             })
         }
     });
   const card = newCard.addNewCard();
   return card;
 }
+
+cardsList.renderCards();

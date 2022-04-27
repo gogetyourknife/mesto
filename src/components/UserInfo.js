@@ -8,7 +8,8 @@ export class UserInfo {
   getUserInfo() {
     return {
       name: this._name.textContent,
-      about: this._about.textContent
+      about: this._about.textContent,
+      avatar: this._avatar.src
     };
   };
 
@@ -17,7 +18,7 @@ export class UserInfo {
     this._about.textContent = about;
   };
 
-  setUserAvatar(data) {
-    this._avatar.src = data.avatar;
+  setUserAvatar(avatar) {
+    this._avatar.src = avatar;
   };
 }
