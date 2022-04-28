@@ -114,7 +114,7 @@ const popupWithFormAddCard = new PopupWithForm(popupAddCard, {
             name: res.name,
             link: res.link,
             id: res._id,
-            userId: res.userId,
+            userId: userId,
             ownerId: res.owner._id,
             likes: res.likes,
           });
