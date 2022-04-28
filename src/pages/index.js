@@ -21,7 +21,6 @@ import {
 import { Section } from '../components/Section.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
-import { PopupWithSubmit } from '../components/PopupWithSubmit.js';
 import { UserInfo } from '../components/UserInfo.js';
 import { FormValidator } from '../components/FormValidator.js';
 import { Card } from '../components/Card.js';
@@ -174,12 +173,12 @@ const userUpdatedAvatar = new PopupWithForm(popupAvatar, {
 
 // удаление
 
-const popupWithDelete = new PopupWithSubmit(popupRemoval);
-popupWithDelete.setEventListeners();
-
-  buttonDeleteCard.addEventListener('click', () => {
-    popupWithDelete.open();
+const popupWithDelete = new PopupWithForm(popupRemoval, {
+  submitFormHandler: () => {
+    api.deleteCard(id)}
   });
+
+popupWithDelete.setEventListeners();
 
 
 // Добвление новой карточки
