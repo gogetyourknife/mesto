@@ -13,7 +13,7 @@ class Api {
       return Promise.reject(`Ошибка: ${res.status}`); // если ошибка, отклоняем promise
     }
 
-// 1. Загрузка информации о пользователе с сервера. Делаем GET запрос: GET https://nomoreparties.co/v1/cohortId/users/me
+// 1. Загрузка информации о пользователе с сервера
 
 // fetch забирает json, затем через data выводит его
 

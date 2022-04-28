@@ -53,7 +53,7 @@ Promise.all([getUserInfo, getCards])
     userId = res._id;
     console.log(res);
 
-    cardsListInitial.forEach(data => {
+    cardsListInitial.reverse().forEach(data => {
       const cardItem = {
         name: data.name,
         link: data.link,
@@ -194,7 +194,6 @@ function createCard(data) {
           .then(res => {
             newCard.deleteCard(res);
             popupWithDelete.close();
-            console.log(res)
           });
       });
     },
@@ -204,7 +203,6 @@ function createCard(data) {
         api.deleteLikes(id)
           .then(res => {
             newCard.setLikes(res.likes)
-            console.log(res)
           })
       }
         else {
