@@ -6,7 +6,6 @@ import {
   buttonEditProfile,
   buttonAddInformation,
   buttonChangeAvatar,
-  buttonDeleteCard,
   popupEdit,
   popupAddCard,
   popupZoomImage,
