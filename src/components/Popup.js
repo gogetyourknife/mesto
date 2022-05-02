@@ -1,6 +1,6 @@
 export class Popup {
-  constructor(popupSelector) {
-    this._popupElement = popupSelector;
+  constructor(popup) {
+    this._popupElement = popup;
     this._closeByEscape = this._closeByEscape.bind(this);
   };
 

@@ -23,9 +23,6 @@ class Api {
     headers: this._headers
     })
     .then(this._handleResponse)
-    .catch((err) => {
-      console.log(err);
-    });
   }
 
   // 2. Загрузка карточек с сервера
@@ -36,9 +33,6 @@ class Api {
       headers: this._headers
     })
     .then(this._handleResponse)
-    .catch((err) => {
-      console.log(err);
-    });
   }
 
   // 3. Редактирование профиля
@@ -53,9 +47,6 @@ class Api {
       })
     })
     .then(this._handleResponse)
-    .catch((err) => {
-      console.log(err);
-    })
   }
 
   // 4. Добавление новой карточки
@@ -70,9 +61,6 @@ class Api {
       })
     })
     .then(this._handleResponse)
-    .catch((err) => {
-      console.log(err);
-    })
   }
 
   // 7. Удаление карточки
@@ -83,9 +71,6 @@ class Api {
       headers: this._headers
     })
     .then(this._handleResponse)
-    .catch((err) => {
-      console.log(err);
-    });
   }
 
    // 8. Постановка и снятие лайка
@@ -98,9 +83,6 @@ class Api {
       headers: this._headers,
     })
     .then(this._handleResponse)
-    .catch((err) => {
-      console.log(err);
-    });
   }
 
   // удаление лайка
@@ -111,9 +93,6 @@ class Api {
       headers: this._headers,
     })
     .then(this._handleResponse)
-    .catch((err) => {
-      console.log(err);
-    });
   }
 
   // 9. Обновление аватара пользователя
@@ -127,9 +106,6 @@ class Api {
       })
     })
     .then(this._handleResponse)
-    .catch((err) => {
-      console.log(err);
-    })
   };
 
 }

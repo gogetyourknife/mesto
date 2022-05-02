@@ -7,6 +7,7 @@ export class Card {
     this._cardImage = settings.image;
     this._title = settings.title;
     this._likeButton = settings.like;
+    this._likeCounter = settings.likeCounter;
 
     // ПР 9 api
 
@@ -41,10 +42,9 @@ export class Card {
     return isLikedCard;
   }
 
-  setLikes(likeCounter) {
-    this._counter = likeCounter;
-    this.likeCounter = this._cardItem.querySelector('.element__like-counter');
-    this.likeCounter.textContent = this._counter.length;
+  setLikes(newLikes) {
+    this._counter = newLikes;
+    this._likeCounter.textContent = this._counter.length;
 
     if (this.isLiked()) {
       this._likeButton.classList.add('element__like-button_active')
@@ -75,6 +75,7 @@ export class Card {
     this._cardImage = this._cardItem.querySelector(this._cardImage);
     this._likeButton = this._cardItem.querySelector(this._likeButton);
     this._deleteButton = this._cardItem.querySelector(this._deleteButton);
+    this._likeCounter = this._cardItem.querySelector(this._likeCounter);
   }
 
   addNewCard() {
@@ -87,9 +88,9 @@ export class Card {
     this._cardImage.alt = this._name;
 
     if (this._ownerId !== this._userId) {
-      this._cardItem.querySelector('.element__delete-button').style.visibility = "hidden";
+      this._deleteButton.style.visibility = "hidden";
     } else {
-      this._cardItem.querySelector('.element__delete-button').style.visibility = 'visible';
+      this._deleteButton.style.visibility = 'visible';
     }
 
     this._setEventListenrs();
