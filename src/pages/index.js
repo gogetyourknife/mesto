@@ -108,7 +108,7 @@ popupWithFormEditProfile.setEventListeners();
 
 const popupWithFormAddCard = new PopupWithForm(popupAddCard, {
   submitFormHandler: (inputValues) => {
-    popupWithFormEditProfile.renderLoading(true);
+    popupWithFormAddCard.renderLoading(true);
     api.addCard(inputValues.place, inputValues.link)
       .then(res =>
         {
@@ -127,7 +127,7 @@ const popupWithFormAddCard = new PopupWithForm(popupAddCard, {
           console.log(err);
         })
         .finally(() => {
-          popupWithFormEditProfile.renderLoading(false);
+          popupWithFormAddCard.renderLoading(false);
         });
     }
 });
@@ -195,7 +195,7 @@ function createCard(data) {
     (id) => {
       popupWithDelete.open();
       popupWithDelete.updateSubmitHandler(() => {
-        userUpdatedAvatar.renderLoading(true);
+        popupWithDelete.renderLoading(true);
         api.deleteCard(id)
           .then(res => {
             newCard.deleteCard(res);
