@@ -175,6 +175,7 @@ const userUpdatedAvatar = new PopupWithForm(popupAvatar, {
 
   buttonChangeAvatar.addEventListener ('click', () => {
   userUpdatedAvatar.open();
+  formValidationAvatar.resetValidation();
 })
 
 // удаление
