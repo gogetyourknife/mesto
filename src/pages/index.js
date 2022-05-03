@@ -32,37 +32,39 @@ let userId = null;
 
 const userInfo = new UserInfo({userName, userDescr, userAvatar});
 
-const cardsList = new Section(
-  {
-    items: [],
-    renderer: (card) => {
-      cardsList.addItems(createCard(card));
-    },
-  } , cardsContainer );
 
 // делаем карточки по умолчанию
 
 const getUserInfo = api.getProfileInfo();
 const getCards = api.getInitialCards();
 
-Promise.all([getUserInfo, getCards])
+const cardsList = new Section(
+  {
+    items: [],
+    renderer: (card) => {
+      createNewCard(card);
+    },
+  } , cardsContainer );
+
+  function createNewCard(data) {
+    const cardItem = {
+      name: data.name,
+      link: data.link,
+      id: data._id,
+      userId: userId,
+      ownerId: data.owner._id,
+      likes: data.likes,
+    }
+    cardsList.addItems(createCard(cardItem));
+       console.log(cardItem);
+  }
+
+  Promise.all([getUserInfo, getCards])
   .then(([userData, items]) => {
     userInfo.setUserAvatar(userData.avatar);
     userInfo.setUserInfo(userData.name, userData.about);
     userId = userData._id;
-
-    items.reverse().forEach(data => {
-      const cardItem = {
-        name: data.name,
-        link: data.link,
-        id: data._id,
-        userId: userId,
-        ownerId: data.owner._id,
-        likes: data.likes,
-      }
-      cardsList.addItems(createCard(cardItem));
-         console.log(cardItem);
-    });
+    cardsList.renderCards(items);
   })
   .catch((err) => {
     console.log(err);
